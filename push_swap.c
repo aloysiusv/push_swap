@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/28 15:24:44 by lrandria          #+#    #+#             */
-/*   Updated: 2021/09/28 21:26:49 by lrandria         ###   ########.fr       */
+/*   Updated: 2021/09/29 21:23:31 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,25 @@ int	is_array_sorted(t_stack a)
 void	init_stacks(t_stack *a, t_stack *b, char **argv)
 {
 	a->size =  
+}
+
+int	is_not_duplicates(char **argv)
+{
+	size_t	i;
+	size_t	j;
+
+	i = 0;
+	j = i + 1;
+	while (argv[i])
+	{
+		if (argv[i] == argv[j])
+			return (FALSE);
+		while (j )
+		j++;
+		if (j == argv[]))
+			i++;
+	}
+	return (TRUE);
 }
 
 int	is_str_only_digits(char *str)

@@ -32,8 +32,7 @@ int		init_stack(t_stack *a, t_stack *b, size_t nb_of_elements, char **input)
 		return (-1);
 	a->head->prev = a->head;
 	a->head->next = node;
-	i = 2;
-	while (i++ < nb_of_elements)
+	while (++i < nb_of_elements)
 	{
 		tmp = add_bottom_node(node, ft_atoi(input[i])); 
 		if (tmp == NULL)

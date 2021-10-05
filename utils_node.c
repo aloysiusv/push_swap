@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "dc_push_swap.h"
+#include "push_swap.h"
 
 t_node	*create_node(int num)
 {
@@ -37,10 +37,11 @@ t_node	*add_top_node(t_node *current_node, int num)
 	{
 		top->prev = top;
 		top->next = current_node;
+		current_node->prev = top;
 	}
 	else
 		current_node = top;
-	//printf("Top node added.\n");
+	printf("Top node initialised.\n");
 	return(top);
 }
 
@@ -55,10 +56,11 @@ t_node	*add_bottom_node(t_node *current_node, int num)
 	{
 		bottom->prev = current_node;
 		bottom->next = current_node;
+		current_node->next = bottom;
 	}
 	else
 		current_node = bottom;
-	//printf("Bottom node added.\n");
+	printf("Bottom node initialised.\n");
 	return(bottom);
 }
 

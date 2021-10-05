@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-t_stack	*create_stack(t_stack *stack, size_t nb_of_elements, char **input)
+void	fill_stack(t_stack *stack, size_t nb_of_elements, char **input)
 {
 	t_node	*node;
 	t_node	*tmp;
@@ -35,8 +35,7 @@ t_stack	*create_stack(t_stack *stack, size_t nb_of_elements, char **input)
 	stack->tail = node;
 	stack->tail->next = stack->head;
 	if (stack->head == NULL || node == NULL || tmp == NULL)
-		return (0);
-	return (stack);
+		return ;
 }
 
 t_bool	is_stack_sorted(t_stack *stack)
@@ -56,21 +55,40 @@ t_bool	is_stack_sorted(t_stack *stack)
 	return (OK);
 }
 
+// void	delete_stack(t_stack *stack)
+// {
+// 	t_node	*current;
+// 	t_node	*tmp;
+//
+// 	current = stack->head->next;
+// 	while (current != stack->head)
+// 	{
+// 	  tmp = current;
+//       current = current->next;
+// 	  printf("Node [%d] is next to be deleted.\n", tmp->num);
+// 	  delete_node(tmp);
+//     }
+// 	printf("Head node [%d] is next to be deleted.\n", stack->head->num);
+// 	delete_node(stack->head);
+// 	free(stack);
+// 	printf("Stack has been deleted.\n");
+// }
+
 void	delete_stack(t_stack *stack)
 {
 	t_node	*current;
 	t_node	*tmp;
 
-	current = stack->head->next;
-	while (current != stack->head)
+	current = stack->head;
+	while (current != stack->tail)
 	{
 	  tmp = current;
       current = current->next;
 	  printf("Node [%d] is next to be deleted.\n", tmp->num);
 	  delete_node(tmp);
     }
-	printf("Head node [%d] is next to be deleted.\n", stack->head->num);
-	delete_node(stack->head);
+	printf("Tail node [%d] is next to be deleted.\n", stack->tail->num);
+	delete_node(stack->tail);
 	free(stack);
 	printf("Stack has been deleted.\n");
 }

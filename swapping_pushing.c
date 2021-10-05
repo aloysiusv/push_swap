@@ -14,13 +14,13 @@
 
 void	swap(t_stack *stack, char c)
 {
-	t_node	*tmp;
+	t_node	tmp[1];
 
-	if (stack->size > 2)
+	if (stack->size >= 2)
 	{
-		tmp = stack->head;
-		stack->head = stack->head->next;
-		stack->head->next = tmp;
+		tmp->num = stack->head->num;
+		stack->head->num = stack->head->next->num;
+		stack->head->next->num = tmp->num;
 		if (c == 'a')
 			write(1, "sa\n", 3);
 		if (c == 'b')
@@ -30,8 +30,8 @@ void	swap(t_stack *stack, char c)
 
 void	swap_both(t_stack *stack, t_stack *other_stack)
 {
-	swap(stack);
-	swap(other_stack);
+	swap(stack, 0);
+	swap(other_stack, 0);
 	write(1, "ss\n", 3);
 }
 
@@ -44,7 +44,7 @@ void	push(t_stack *receiving, t_stack *pushing, char pushed_on)
 	tmp = add_top_node(receiving->head, pushing->head->num);
 	if (pushing->size > 1)
 		pushing->head->next = pushing->head;
-	delete(pushing->head);
+	delete_node(pushing->head);
 	pushing->size = pushing->size - 1;
 	receiving->size = receiving->size + 1;
 	if (pushed_on == 'a')

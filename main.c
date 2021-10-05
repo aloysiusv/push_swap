@@ -33,12 +33,12 @@ int	main(int argc, char **argv)
 {
 	t_stack	*stack_a;
 
+	stack_a = (t_stack *)malloc(sizeof(t_stack));
+	if (stack_a == NULL)
+		return (0);
 	if (is_input_valid(argc - 1, argv + 1) == OK)
 	{
-		stack_a = (t_stack *)malloc(sizeof(t_stack));
-		if (stack_a == NULL)
-			return (0);
-		create_stack(stack_a, argc - 1, argv + 1);
+		fill_stack(stack_a, argc - 1, argv + 1);
 		if (is_stack_sorted(stack_a) == OK)
 		{
 			write(1, "Stack is already sorted\n", 25);

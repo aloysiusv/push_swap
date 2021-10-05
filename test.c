@@ -19,7 +19,7 @@ int	main(int argc, char **argv)
 	stack_a = (t_stack *)malloc(sizeof(t_stack));
 	if (stack_a == NULL)
 		return (0);
-	fill_stack(stack_a, (size_t)argc - 1, argv + 1);
+	init_stack(stack_a, (size_t)argc - 1, argv + 1);
 	swap(stack_a, 'a');
 	delete_stack(stack_a);
 	return (0);

@@ -22,10 +22,10 @@ void	rotate(t_stack *stack, char c)
 		write(1, "rb\n", 3);
 }
 
-void	rotate_both(t_stack *stack, t_stack *other_stack)
+void	rotate_both(t_stack *a, t_stack *b)
 {
-	rotate(stack);
-	rotate(other_stack);
+	rotate(a);
+	rotate(b);
 	write(1, "rr\n", 3);
 }
 
@@ -39,9 +39,9 @@ void	reverse_rotate(t_stack *stack, char c)
 		write(1, "rrb\n", 4);
 }
 
-void	reverse_rotate_both(t_stack *stack, t_stack *other_stack)
+void	reverse_rotate_both(t_stack *a, t_stack *b)
 {
-	reverse_rotate(stack);
-	reverse_rotate(other_stack);
+	reverse_rotate(a);
+	reverse_rotate(b);
 	write(1, "rrr\n", 4);
 }

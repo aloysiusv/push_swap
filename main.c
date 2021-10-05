@@ -12,43 +12,40 @@
 
 #include "push_swap.h"
 
-// void	push_swap(t_stack *stack_a)
+// void	push_swap(t_stack *a, t_stack *b)
 // {
-// 	t_stack	*stack_b;
-//
-// 	stack_b = (t_stack *)malloc(sizeof(t_stack));
-// 	if (stack_b == NULL)
-// 		return (NULL);
-// 	if (stack_a->stack_size <= 5)
-// 		sort_5_or_less(stack_a, stack_b);
-// 	if (stack_a->stack_size <= 100)
-// 		sort_100_and_less(stack_a, stack_b);
-// 	if stack_a->stack_size <= 500)
-// 		sort_500_and_less(stack_a, stack_b);
-// 	if (stack_a->stack_size > 500)
-// 		printf("Sorry, too lazy for that...");
+// 	if (a->stack_size <= 5)
+// 		sort_5_or_less(a, b);
+// 	if (a->stack_size <= 100)
+// 		sort_100_and_less(a, b);
+// 	if a->stack_size <= 500)
+// 		sort_500_and_less(a, b);
+// 	if (a->stack_size > 500)
+// 		printf("Let's radix lol.");
 // }
 
 int	main(int argc, char **argv)
 {
-	t_stack	*stack_a;
+	t_stack	*a;
+	t_stack	*b;
 
-	stack_a = (t_stack *)malloc(sizeof(t_stack));
-	if (stack_a == NULL)
+	a = (t_stack *)malloc(sizeof(t_stack));
+	b = (t_stack *)malloc(sizeof(t_stack));
+	if (a == NULL || b == NULL)
 		return (0);
 	if (is_input_valid(argc - 1, argv + 1) == OK)
 	{
-		fill_stack(stack_a, argc - 1, argv + 1);
-		if (is_stack_sorted(stack_a) == OK)
+		init_stack(a, b, argc - 1, argv + 1);
+		if (is_stack_sorted(a) == OK)
 		{
 			write(1, "Stack is already sorted\n", 25);
-			delete_stack(stack_a);
+			delete_stack(a);
 			return (0);
 		}
 		else
 		{
 			write(1, "Let's do push_swap!\n", 21);
-			//push_swap(stack_a);
+			//push_swap(a, b);
 		}
 	}
 	else
@@ -56,6 +53,7 @@ int	main(int argc, char **argv)
 		write(1, "Error\n", 7);
 		return (0);
 	}
-	delete_stack(stack_a);
+	delete_stack(a);
+	delete_stack(b);
 	return (0);
 }

@@ -28,20 +28,18 @@ void	swap(t_stack *stack, char c)
 	}
 }
 
-void	swap_both(t_stack *stack, t_stack *other_stack)
+void	swap_both(t_stack *a, t_stack *b)
 {
-	swap(stack, 0);
-	swap(other_stack, 0);
+	swap(a, 0);
+	swap(b, 0);
 	write(1, "ss\n", 3);
 }
 
 void	push(t_stack *receiving, t_stack *pushing, char pushed_on)
 {
-	t_node	*tmp;
-
-	if (pushing != NULL)
+	if (pushing->head != NULL)
 	{
-	tmp = add_top_node(receiving->head, pushing->head->num);
+	add_top_node(receiving->head, pushing->head->num);
 	if (pushing->size > 1)
 		pushing->head->next = pushing->head;
 	delete_node(pushing->head);

@@ -29,12 +29,12 @@ int	main(int argc, char **argv)
 	t_stack	*a;
 	t_stack	*b;
 
-	a = (t_stack *)malloc(sizeof(t_stack));
-	b = (t_stack *)malloc(sizeof(t_stack));
-	if (a == NULL || b == NULL)
-		return (0);
 	if (is_input_valid(argc - 1, argv + 1) == OK)
 	{
+		a = (t_stack *)malloc(sizeof(t_stack));
+		b = (t_stack *)malloc(sizeof(t_stack));
+		if (a == NULL || b == NULL)
+			return (0);
 		init_stack(a, b, argc - 1, argv + 1);
 		if (is_stack_sorted(a) == OK)
 		{
@@ -46,17 +46,17 @@ int	main(int argc, char **argv)
 		{
 			write(1, "Let's do push_swap!\n", 21);
 			swap(a, 'a');
-			push(b, a, 'b');
-			push(b, a, 'b');
-			push(b, a, 'b');
+			// push(b, a, 'b');
+			// push(b, a, 'b');
+			// push(b, a, 'b');
 		}
+		delete_stack(a);
+		delete_stack(b);
 	}
 	else
 	{
 		write(1, "Error\n", 7);
 		return (0);
 	}
-	delete_stack(a);
-	delete_stack(b);
 	return (0);
 }

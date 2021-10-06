@@ -39,11 +39,11 @@ void	push(t_stack *receiving, t_stack *pushing, char pushed_on)
 {
 	if (pushing->head != NULL)
 	{
-		t_node	*tmp;
+		// t_node	*tmp;
 
 		if (pushing->size > 1)
 			pushing->head = pushing->head->next;
-		tmp = add_bottom_node(receiving->head, pushing->head->num);
+		// tmp = add_bottom_node(receiving->head, pushing->head->num);
 		printf("Node [%d] pushed, now will be deleted.", pushing->head->num);
 		delete_node(pushing->head);
 		pushing->size = pushing->size - 1;

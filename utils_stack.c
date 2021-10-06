@@ -12,35 +12,43 @@
 
 #include "push_swap.h"
 
-int		init_stack(t_stack *a, t_stack *b, size_t nb_of_elements, char **input)
+static int	fill_stack_bigger_than_two(size_t size, t_node **node, char **input)
 {
-	t_node	*node;
 	t_node	*tmp;
 	size_t	i;
 
-	i = 0;
+	i = 1;
+	while (++i < size)
+	{
+		tmp = add_bottom_node(*node, ft_atoi(input[i])); 
+		if (tmp == NULL)
+			return (-1);
+		(*node)->next = tmp;
+		tmp = tmp->next;
+		*node = (*node)->next;
+	}
+	return (0);
+}
+
+int	init_stack(t_stack *a, t_stack *b, size_t size, char **input)
+{
+	t_node	*node;
+
 	b->size = 0;
 	b->head = NULL;
 	b->tail = NULL;
 	a->size = nb_of_elements;
-	a->head = create_node(ft_atoi(input[i]));
+	a->head = create_node(ft_atoi(input[0]));
 	if (a->head == NULL)
 		return (-1); 
-	i = 1;
-	node = add_bottom_node(a->head, ft_atoi(input[i]));
+	node = add_bottom_node(a->head, ft_atoi(input[1]));
 	if (node == NULL)
 		return (-1);
 	a->head->prev = a->head;
 	a->head->next = node;
-	while (++i < nb_of_elements)
-	{
-		tmp = add_bottom_node(node, ft_atoi(input[i])); 
-		if (tmp == NULL)
+	if (a->size > 2)
+		if (fill_stack_bigger_than_two(nb_of_elements, &node, input) == -1)
 			return (-1);
-		node->next = tmp;
-		tmp = tmp->next;
-		node = node->next;
-	}
 	a->tail = node;
 	a->tail->next = a->head;
 	return (0);

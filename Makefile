@@ -10,25 +10,21 @@
 #                                                                              #
 # **************************************************************************** #
 
-NAME		=	push_swap.a
+NAME		=	push_swap
 CC			=	gcc
 CFLAGS		=	-Wall -Wextra -Werror
 OBJS		=	$(SRCS:.c=.o)
 HDR			=	push_swap.h
-SRCS		=	main.c parse_args.c stack_creation.c \
-				swapping_pushing.c rotating.c sorting.c \
-				node_utils.c utils.c \
+SRCS		=	main.c parse_args.c \
+				swapping_pushing.c \
+				utils.c utils_node.c utils_stack.c \
 
 all:		$(NAME)
 
 $(NAME):	$(OBJS)
-			ar rcs $(NAME) $(OBJS)
+			$(CC) $(CFLAGS) $(OBJS)
 
 bonus:		$(NAME)
-
-test:		$(OBJS) main.o
-			@$(CC) $(CFLAGS) -fsanitize=address $(OBJS) main.o
-			@./a.out
 
 %.o:		%.c $(HDR)
 			$(CC) $(CFLAGS) -c -o $@ $< 

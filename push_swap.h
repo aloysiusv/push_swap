@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef	DC_PUSH_SWAP_H
-# define DC_PUSH_SWAP_H
+#ifndef	PUSH_SWAP_H
+# define PUSH_SWAP_H
 
 # include <stdio.h>
 # include <unistd.h>
@@ -43,7 +43,7 @@ typedef struct s_stack
 size_t	ft_strlen(const char *s);
 int 	ft_is_digit(int c);
 int		ft_atoi(const char *num_ascii);
-long	ft_atol(const char *nptr);
+long	ft_atol(const char *num_ascii);
 
 t_bool	is_input_valid(size_t nb_of_elements, char **input);
 void	push_swap(t_stack *a, t_stack *b);
@@ -64,7 +64,7 @@ t_node	*add_top_node(t_node *current_node, int num);
 t_node	*add_bottom_node(t_node *current_node, int num);
 void	delete_node(t_node *node);
 
-int		init_stack(t_stack *a, t_stack *b, size_t nb_of_elements, char **input);
+int		init_stack(t_stack *a, t_stack *b, size_t size, char **input);
 void	delete_stack(t_stack *stack);
 t_bool	is_stack_sorted(t_stack *stack);
 

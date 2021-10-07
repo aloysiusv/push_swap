@@ -37,15 +37,19 @@ void	swap_both(t_stack *a, t_stack *b)
 
 void	push(t_stack *receiving, t_stack *pushing, char pushed_on)
 {
+	t_node	*to_del;
+
 	if (pushing->head != NULL)
 	{
-		//t_node	*tmp;
-
-		//tmp = add_bottom_node(receiving->head, pushing->head->num);
-		printf("Node [%d] pushed, now will be deleted.", pushing->head->num);
-		delete_node(pushing->head);
-		pushing->size = pushing->size - 1;
-		receiving->size = receiving->size + 1;
+		add_top_node(receiving->head, pushing->head->num);
+		to_del = pushing->head;
+		pushing->head = pushing->head->next;
+		pushing->head->prev = pushing->tail;
+		pushing->tail->next = pushing->head;
+		printf("Node [%d] pushed, now will be deleted.", to_del->num);
+		delete_node(to_del);
+		pushing->size--;
+		receiving->size++;
 	if (pushed_on == 'a')
 		write(1, "pa\n", 3);
 	if (pushed_on == 'b')

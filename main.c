@@ -46,8 +46,8 @@ int	main(int argc, char **argv)
 		else
 		{
 			write(1, "Let's do push_swap!\n", 21);
-			swap(a, 'a');
-			// push(b, a, 'b');
+			// swap(a, 'a');
+			push(b, a, 'b');
 			// push(b, a, 'b');
 			// push(b, a, 'b');
 		}

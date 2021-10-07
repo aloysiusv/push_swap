@@ -30,7 +30,7 @@ static int	fill_stack_bigger_than_two(size_t size, t_node **node, char **input)
 	return (0);
 }
 
-int	init_stack(t_stack *a, t_stack *b, size_t size, char **input)
+int	init_stack(t_stack *a, t_stack *b, size_t nb_of_elements, char **input)
 {
 	t_node	*node;
 
@@ -44,7 +44,7 @@ int	init_stack(t_stack *a, t_stack *b, size_t size, char **input)
 	node = add_bottom_node(a->head, ft_atoi(input[1]));
 	if (node == NULL)
 		return (-1);
-	a->head->prev = a->head;
+	a->head->prev = a->tail;
 	a->head->next = node;
 	if (a->size > 2)
 		if (fill_stack_bigger_than_two(nb_of_elements, &node, input) == -1)

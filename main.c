@@ -35,7 +35,7 @@ int	main(int argc, char **argv)
 		b = (t_stack *)malloc(sizeof(t_stack));
 		if (a == NULL || b == NULL)
 			return (0);
-		init_stack(a, b, argc - 1, argv + 1);
+		init_stacks(a, b, argc - 1, argv + 1);
 		if (is_stack_sorted(a) == OK)
 		{
 			write(1, "Stack is already sorted\n", 25);
@@ -48,7 +48,7 @@ int	main(int argc, char **argv)
 			write(1, "Let's do push_swap!\n", 21);
 			// swap(a, 'a');
 			push(b, a, 'b');
-			// push(b, a, 'b');
+			push(b, a, 'b');
 			// push(b, a, 'b');
 		}
 		delete_stack(a);

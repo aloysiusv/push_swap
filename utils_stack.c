@@ -30,7 +30,7 @@ static int	fill_stack_bigger_than_two(size_t size, t_node **node, char **input)
 	return (0);
 }
 
-int	init_stack(t_stack *a, t_stack *b, size_t nb_of_elements, char **input)
+int	init_stacks(t_stack *a, t_stack *b, size_t nb_of_elements, char **input)
 {
 	t_node	*node;
 
@@ -85,15 +85,20 @@ void	delete_stack(t_stack *stack)
       	current = current->next;
 	  	printf("Node [%d] is next to be deleted.\n", tmp->num);
 	  	delete_node(tmp);
+		stack->size--;
     	}
-		printf("Tail node [%d] is next to be deleted.\n", stack->tail->num);
-		delete_node(stack->tail);
+		if (stack->tail != NULL)
+		{
+			printf("Tail node [%d] is next to be deleted.\n", stack->tail->num);
+			delete_node(stack->tail);
+			stack->size--;
+		}
 	}
 	if (stack->size == 1)
 	{
-		printf("Main node [%d] is next to be deleted", stack->head->num);
+		printf("Main node [%d] is next to be deleted\n", stack->head->num);
 		delete_node(stack->head);
+		stack->size--;
 	}
-	free(stack);
 	printf("Stack has been deleted.\n");
 }

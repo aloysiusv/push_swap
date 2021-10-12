@@ -74,7 +74,7 @@ t_bool	is_stack_sorted(t_stack *stack)
 
 void	delete_stack(t_stack *stack)
 {
-	// t_node	*to_save;
+		// t_node	*to_save;
 	// t_node	*tmp;
 
 	// if (stack->size == 1)
@@ -100,21 +100,17 @@ void	delete_stack(t_stack *stack)
 	// 		delete_node(stack->tail);
 	// 		stack->size--;
 	// 	}
+	
+	t_node	*tmp;
 
-// }
-	t_node	*to_save;
-	t_node	*to_del;
-
-	if (stack == 0)
-		return ;
-	to_save = stack->head;
-	while (to_save)
+	while (stack->head != stack->tail)
 	{
-		to_del = to_save;
-		to_save = to_save->next;
-		free(to_del);
+	  	tmp = stack->head;
+      	stack->head = stack->head->next;
+	  	delete_node(tmp);
+		stack->size--;
 	}
-	stack->head = NULL;
+	if (stack->tail != NULL)
+		delete_node(stack->tail);
 	free(stack);
-	printf("Stack has been deleted.\n");
 }

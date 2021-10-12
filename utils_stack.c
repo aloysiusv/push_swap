@@ -17,8 +17,8 @@ static int	fill_stack_bigger_than_two(size_t size, t_node **node, char **input)
 	t_node	*tmp;
 	size_t	i;
 
-	i = 1;
-	while (++i < size)
+	i = 2;
+	while (i < size)
 	{
 		tmp = add_bottom_node(*node, ft_atoi(input[i])); 
 		if (tmp == NULL)
@@ -26,6 +26,7 @@ static int	fill_stack_bigger_than_two(size_t size, t_node **node, char **input)
 		(*node)->next = tmp;
 		tmp = tmp->next;
 		*node = (*node)->next;
+		i++;
 	}
 	return (0);
 }
@@ -73,32 +74,47 @@ t_bool	is_stack_sorted(t_stack *stack)
 
 void	delete_stack(t_stack *stack)
 {
-	t_node	*current;
-	t_node	*tmp;
-	
-	if (stack->size > 1)
+	// t_node	*to_save;
+	// t_node	*tmp;
+
+	// if (stack->size == 1)
+	// {
+	// 	printf("Main node [%d] is next to be deleted\n", stack->head->num);
+	// 	delete_node(stack->head);
+	// 	stack->size--;
+	// }
+	// if (stack->size > 1)
+	// {
+	// 	to_save = stack->head;
+	// 	while (to_save != stack->tail)
+	// 	{
+	//   		tmp = to_save;
+    //   		to_save = to_save->next;
+	//   		printf("Node [%d] is next to be deleted.\n", tmp->num);
+	//   		delete_node(tmp);
+	// 		stack->size--;
+    // 	}
+	// 	if (stack->tail != NULL)
+	// 	{
+	// 		printf("Tail node [%d] is next to be deleted.\n", stack->tail->num);
+	// 		delete_node(stack->tail);
+	// 		stack->size--;
+	// 	}
+
+// }
+	t_node	*to_save;
+	t_node	*to_del;
+
+	if (stack == 0)
+		return ;
+	to_save = stack->head;
+	while (to_save)
 	{
-		current = stack->head;
-		while (current != stack->tail)
-		{
-	  	tmp = current;
-      	current = current->next;
-	  	printf("Node [%d] is next to be deleted.\n", tmp->num);
-	  	delete_node(tmp);
-		stack->size--;
-    	}
-		if (stack->tail != NULL)
-		{
-			printf("Tail node [%d] is next to be deleted.\n", stack->tail->num);
-			delete_node(stack->tail);
-			stack->size--;
-		}
+		to_del = to_save;
+		to_save = to_save->next;
+		free(to_del);
 	}
-	if (stack->size == 1)
-	{
-		printf("Main node [%d] is next to be deleted\n", stack->head->num);
-		delete_node(stack->head);
-		stack->size--;
-	}
+	stack->head = NULL;
+	free(stack);
 	printf("Stack has been deleted.\n");
 }

@@ -40,17 +40,22 @@ void	push(t_stack *receiving, t_stack *pushing, char pushed_on)
 	t_node	*to_push;
 	t_node	*to_save;
 	
-	to_push = pushing->head;
-	pushing->head = pushing->head->next;
-	to_save = receiving->head;
-	receiving->head = to_push;
-	if (receiving->head != NULL)
-		receiving->head->next = to_save;
-	printf("Node [%d] has been pushed.\n", receiving->head->num);
-	pushing->size--;
-	receiving->size++;
-	if (pushed_on == 'a')
-		write(1, "pa\n", 3);
-	if (pushed_on == 'b')
-		write(1, "pb\n", 3);
+	if (pushing->head != NULL)
+	{
+		to_push = pushing->head;
+		pushing->head = pushing->head->next;
+		to_save = receiving->head;
+		receiving->head = to_push;
+		if (receiving->head != NULL)
+			receiving->head->next = to_save;
+		if (receiving->size >= 2)
+			receiving->head->prev = receiving->tail;
+		printf("Node [%d] has been pushed.\n", receiving->head->num);
+		pushing->size--;
+		receiving->size++;
+		if (pushed_on == 'a')
+			write(1, "pa\n", 3);
+		if (pushed_on == 'b')
+			write(1, "pb\n", 3);
+	}
 }

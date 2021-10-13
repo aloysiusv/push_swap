@@ -38,7 +38,7 @@ int	main(int argc, char **argv)
 		init_stacks(a, b, argc - 1, argv + 1);
 		if (is_stack_sorted(a) == OK)
 		{
-			write(1, "Stack is already sorted\n", 25);
+			write(1, "Stack is already sorted.\n", 25);
 			delete_stack(a);
 			delete_stack(b);
 			return (0);
@@ -46,11 +46,11 @@ int	main(int argc, char **argv)
 		else
 		{
 			write(1, "Let's do push_swap!\n", 21);
-			swap(a, 'a');
-			push(b, a, 'b');
-			push(b, a, 'b');
-			push(b, a, 'b');
-			rotate(b, 'b'); 
+			// swap(a, 'a');
+			// push(b, a, 'b');
+			// push(b, a, 'b');
+			// push(b, a, 'b');
+			// rotate(b, 'b'); 
 			// reverse_rotate(b, 'b'); 
 		}
 		delete_stack(a);

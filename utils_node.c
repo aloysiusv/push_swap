@@ -41,7 +41,6 @@ t_node	*add_top_node(t_node *current_node, int num)
 	}
 	else
 		current_node = top;
-	printf("Top node initialised.\n");
 	return(top);
 }
 
@@ -60,7 +59,6 @@ t_node	*add_bottom_node(t_node *current_node, int num)
 	}
 	else
 		current_node = bottom;
-	printf("Bottom node initialised.\n");
 	return(bottom);
 }
 

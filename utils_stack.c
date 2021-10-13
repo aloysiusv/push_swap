@@ -112,5 +112,9 @@ void	delete_stack(t_stack *stack)
 	}
 	if (stack->tail != NULL)
 		delete_node(stack->tail);
-	free(stack);
+	if (stack != NULL)
+	{
+		free(stack);
+		printf("Stack has been deleted.\n");
+	}
 }

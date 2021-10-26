@@ -14,17 +14,15 @@
 
 static int	fill_stack_bigger_than_two(size_t size, t_node **node, char **input)
 {
-	t_node	*tmp;
+	t_node	*new;
 	size_t	i;
 
 	i = 2;
 	while (i < size)
 	{
-		tmp = add_bottom_node(*node, ft_atoi(input[i])); 
-		if (tmp == NULL)
+		new = add_bottom_node(*node, ft_atoi(input[i])); 
+		if (new == NULL)
 			return (-1);
-		(*node)->next = tmp;
-		tmp = tmp->next;
 		*node = (*node)->next;
 		i++;
 	}
@@ -37,21 +35,16 @@ int	init_stacks(t_stack *a, t_stack *b, size_t nb_of_elements, char **input)
 
 	b->size = 0;
 	b->head = NULL;
-	b->tail = NULL;
 	a->size = nb_of_elements;
 	a->head = create_node(ft_atoi(input[0]));
-	if (a->head == NULL)
-		return (-1); 
 	node = add_bottom_node(a->head, ft_atoi(input[1]));
-	if (node == NULL)
+	if (a->head == NULL ||node == NULL)
 		return (-1);
-	a->head->prev = a->tail;
 	a->head->next = node;
 	if (a->size > 2)
 		if (fill_stack_bigger_than_two(nb_of_elements, &node, input) == -1)
 			return (-1);
-	a->tail = node;
-	a->tail->next = a->head;
+	a->head->prev = node;
 	return (0);
 }
 
@@ -62,7 +55,7 @@ t_bool	is_stack_sorted(t_stack *stack)
 
 	iterator = stack->head;
 	comparator = stack->head->next;
-	while (iterator != stack->tail)
+	while (iterator != stack->head->prev)
 	{
 		if (iterator->num > comparator->num)
 			return (NOT_OK);
@@ -74,32 +67,16 @@ t_bool	is_stack_sorted(t_stack *stack)
 
 void	delete_stack(t_stack *stack)
 {
-	t_node	*to_save;
 	t_node	*tmp;
 
-	if (stack->size == 1)
+	while (stack->size)
 	{
-		printf("Main node [%d] is next to be deleted\n", stack->head->num);
-		delete_node(stack->head);
+		tmp = stack->head;
+		printf("tmp = %d\n", tmp->num);
+	  	stack->head = stack->head->prev;
+	  	printf("Node [%d] is next to be deleted.\n", tmp->num);
+	  	delete_node(tmp);
 		stack->size--;
-	}
-	if (stack->size > 1)
-	{
-		to_save = stack->head;
-		while (to_save != stack->tail)
-		{
-	  		tmp = to_save;
-      		to_save = to_save->next;
-	  		printf("Node [%d] is next to be deleted.\n", tmp->num);
-	  		delete_node(tmp);
-			stack->size--;
-    	}
-		if (stack->tail != NULL)
-		{
-			printf("Tail node [%d] is next to be deleted.\n", stack->tail->num);
-			delete_node(stack->tail);
-			stack->size--;
-		}
 	}
 	if (stack != NULL)
 		free(stack);

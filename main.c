@@ -46,12 +46,14 @@ int	main(int argc, char **argv)
 		else
 		{
 			write(1, "Let's do push_swap!\n", 21);
-			// swap(a, 'a');
-			push(b, a, 'b');
-			push(b, a, 'b');
-			// push(b, a, 'b');
-			// rotate(b, 'b'); 
-			// reverse_rotate(b, 'b'); 
+			swap(a, 'a');
+			push(a, b, 'b');
+			push(a, b, 'b');
+			push(a, b, 'b');
+			push(a, b, 'b');
+			push(b, a, 'a');
+			bottom_node_to_top(a, 'a');
+			top_node_to_bottom(b, 'b'); 
 		}
 		delete_stack(a);
 		delete_stack(b);

@@ -26,45 +26,45 @@ t_node	*create_node(int num)
 	return (node);
 }
 
-t_node	*add_top_node(t_node *current_node, int num)
+t_node	*add_top_node(t_node *current_head, int num)
 {
 	t_node	*top;
 
 	top = create_node(num);
 	if (top == NULL)
 		return (0);
-	if (current_node)
+	if (current_head)
 	{
-		top->prev = top;
-		top->next = current_node;
-		current_node->prev = top;
+		top->prev = current_head->prev;
+		top->next = current_head;
+		current_head->prev = top;
 	}
 	else
-		current_node = top;
-	return(top);
+		current_head = top;
+	return (top);
 }
 
-t_node	*add_bottom_node(t_node *current_node, int num)
+t_node	*add_bottom_node(t_node *current_tail, int num)
 {
 	t_node	*bottom;
 
 	bottom = create_node(num);
 	if (bottom == NULL)
 		return (0);
-	if (current_node)
+	if (current_tail)
 	{
-		bottom->prev = current_node;
-		bottom->next = current_node;
-		current_node->next = bottom;
+		bottom->prev = current_tail;
+		bottom->next = current_tail->prev;
+		current_tail->next = bottom;
 	}
 	else
-		current_node = bottom;
+		current_tail = bottom;
 	return(bottom);
 }
 
 void	delete_node(t_node *node)
 {
-	if (node == 0)
+	if (node == NULL)
 		return ;
 	free(node);
 }

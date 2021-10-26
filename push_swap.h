@@ -28,7 +28,7 @@ typedef enum e_bool
 
 typedef struct s_node
 {
-	int	num;
+	int				num;
 	struct s_node	*prev;
 	struct s_node	*next;
 }				t_node;
@@ -37,7 +37,6 @@ typedef struct s_stack
 {
 	size_t	size;
 	t_node	*head;
-	t_node	*tail;
 }				t_stack;
 
 size_t	ft_strlen(const char *s);
@@ -50,10 +49,11 @@ void	push_swap(t_stack *a, t_stack *b);
 
 void	swap(t_stack *stack, char c);
 void	swap_both(t_stack *a, t_stack *b);
-void	push(t_stack *receiving, t_stack *pushing, char c);
-void	rotate(t_stack *stack, char c);
+void	push(t_stack *pushing, t_stack *receiving, char c);
+void	top_node_to_bottom(t_stack *stack, char c);
+void	bottom_node_to_top(t_stack *stack, char c);
 void	rotate_both(t_stack *a, t_stack *b);
-void	reverse_rotate(t_stack *stack, char c);
+void	reverse_rotate_both(t_stack *a, t_stack *b);
 
 void	sort_5_and_less(t_stack *a, t_stack *b);
 void	sort_100_and_less(t_stack *a, t_stack *b);

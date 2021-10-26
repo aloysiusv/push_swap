@@ -35,27 +35,52 @@ void	swap_both(t_stack *a, t_stack *b)
 	write(1, "ss\n", 3);
 }
 
-void	push(t_stack *receiving, t_stack *pushing, char pushed_on)
+static t_node	*pop(t_stack *stack)
 {
-	t_node	*to_push;
-	t_node	*to_save;
-	
-	if (pushing->head != NULL)
+	t_node	*tmp;
+
+	tmp = stack->head;
+	if (stack->head->next == stack->head)
+		stack->head = NULL;
+	else
 	{
-		to_push = pushing->head;
-		pushing->head = pushing->head->next;
-		to_save = receiving->head;
-		receiving->head = to_push;
-		if (receiving->head != NULL)
-			receiving->head->next = to_save;
-		if (receiving->size >= 2)
-			receiving->head->prev = receiving->tail;
-		printf("Node [%d] has been pushed.\n", receiving->head->num);
-		pushing->size--;
-		receiving->size++;
-		if (pushed_on == 'a')
-			write(1, "pa\n", 3);
-		if (pushed_on == 'b')
-			write(1, "pb\n", 3);
+		stack->head->prev->next = stack->head->next;
+		stack->head->next->prev = stack->head->prev;
+		stack->head = stack->head->next;
 	}
+	tmp->prev = NULL;
+	tmp->next = NULL;
+	return (tmp);
+}
+
+static void	help_push(t_stack *stack, t_node *node)
+{
+	if (stack->head == NULL)
+	{
+		node->prev = node;
+		node->next = node;
+	}
+	else
+	{
+		node->prev = stack->head->prev;
+		node->next = stack->head;
+		stack->head->prev->next = node;
+		stack->head->prev = node;
+	}
+	stack->head = node;
+}
+
+void	push(t_stack *pushing, t_stack *receiving, char pushed_on)
+{
+	t_node	*node;
+
+	if ((node = pop(pushing)))
+		help_push(receiving, node);
+	printf("Node [%d] has been pushed.\n", receiving->head->num);
+	pushing->size--;
+	receiving->size++;
+	if (pushed_on == 'a')
+		write(1, "pa\n", 3);
+	if (pushed_on == 'b')
+		write(1, "pb\n", 3);
 }

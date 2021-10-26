@@ -74,47 +74,34 @@ t_bool	is_stack_sorted(t_stack *stack)
 
 void	delete_stack(t_stack *stack)
 {
-		// t_node	*to_save;
-	// t_node	*tmp;
-
-	// if (stack->size == 1)
-	// {
-	// 	printf("Main node [%d] is next to be deleted\n", stack->head->num);
-	// 	delete_node(stack->head);
-	// 	stack->size--;
-	// }
-	// if (stack->size > 1)
-	// {
-	// 	to_save = stack->head;
-	// 	while (to_save != stack->tail)
-	// 	{
-	//   		tmp = to_save;
-    //   		to_save = to_save->next;
-	//   		printf("Node [%d] is next to be deleted.\n", tmp->num);
-	//   		delete_node(tmp);
-	// 		stack->size--;
-    // 	}
-	// 	if (stack->tail != NULL)
-	// 	{
-	// 		printf("Tail node [%d] is next to be deleted.\n", stack->tail->num);
-	// 		delete_node(stack->tail);
-	// 		stack->size--;
-	// 	}
-	
+	t_node	*to_save;
 	t_node	*tmp;
 
-	while (stack->head != stack->tail)
+	if (stack->size == 1)
 	{
-	  	tmp = stack->head;
-      	stack->head = stack->head->next;
-	  	delete_node(tmp);
+		printf("Main node [%d] is next to be deleted\n", stack->head->num);
+		delete_node(stack->head);
 		stack->size--;
 	}
-	if (stack->tail != NULL)
-		delete_node(stack->tail);
-	if (stack != NULL)
+	if (stack->size > 1)
 	{
-		free(stack);
-		printf("Stack has been deleted.\n");
+		to_save = stack->head;
+		while (to_save != stack->tail)
+		{
+	  		tmp = to_save;
+      		to_save = to_save->next;
+	  		printf("Node [%d] is next to be deleted.\n", tmp->num);
+	  		delete_node(tmp);
+			stack->size--;
+    	}
+		if (stack->tail != NULL)
+		{
+			printf("Tail node [%d] is next to be deleted.\n", stack->tail->num);
+			delete_node(stack->tail);
+			stack->size--;
+		}
 	}
+	if (stack != NULL)
+		free(stack);
+	printf("Stack has been deleted.\n");
 }

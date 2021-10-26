@@ -47,8 +47,8 @@ int	main(int argc, char **argv)
 		{
 			write(1, "Let's do push_swap!\n", 21);
 			// swap(a, 'a');
-			// push(b, a, 'b');
-			// push(b, a, 'b');
+			push(b, a, 'b');
+			push(b, a, 'b');
 			// push(b, a, 'b');
 			// rotate(b, 'b'); 
 			// reverse_rotate(b, 'b'); 

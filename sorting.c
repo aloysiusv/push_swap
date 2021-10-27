@@ -12,14 +12,14 @@
 
 #include "push_swap.h"
 
-static void	sort_two_three(t_stack *stack)
+static void	sort_2_3(t_stack *stack)
 {
 	if (stack->size == 2)
-		if (stack->head->num > stack->head->next->num)
+		if (stack->head->index > stack->head->next->index)
 			swap(stack, 'a');
 	if (stack->size == 3)
 	{
-		
+		if (stack->head->index)
 	}
 
 }

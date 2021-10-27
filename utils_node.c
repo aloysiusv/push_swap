@@ -20,29 +20,12 @@ t_node	*create_node(int num)
 	if (node == 0)
 		return (0);
 	node->num = num;
+	node->index = -1;
 	node->prev = node;
 	node->next = node;
 	printf("A node has been created.\n");
 	return (node);
 }
-
-// t_node	*add_top_node(t_node *current_head, int num)
-// {
-// 	t_node	*top;
-//
-// 	top = create_node(num);
-// 	if (top == NULL)
-// 		return (0);
-// 	if (current_head)
-// 	{
-// 		top->prev = current_head->prev;
-// 		top->next = current_head;
-// 		current_head->prev = top;
-// 	}
-// 	else
-// 		current_head = top;
-// 	return (top);
-// }
 
 t_node	*add_bottom_node(t_node *current_tail, int num)
 {

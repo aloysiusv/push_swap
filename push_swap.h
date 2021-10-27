@@ -61,11 +61,11 @@ void	sort_100_and_less(t_stack *a, t_stack *b);
 void	sort_500_and_less(t_stack *a, t_stack *b);
 
 t_node	*create_node(int num);
-// t_node	*add_top_node(t_node *current_node, int num);
 t_node	*add_bottom_node(t_node *current_node, int num);
 void	delete_node(t_node *node);
 
 int		init_stacks(t_stack *a, t_stack *b, size_t size, char **input);
+void	init_index(t_stack *a);
 void	delete_stack(t_stack *stack);
 t_bool	is_stack_sorted(t_stack *stack);
 

@@ -12,6 +12,55 @@
 
 #include "push_swap.h"
 
+static t_node	*find_min_for_index(t_stack *a)
+{
+	size_t	size;
+	t_node	*smallest;
+	t_node	*comparator;
+
+	if (a->head == NULL)
+		return (NULL);
+	size = a->size;
+	if (size == 1)
+		return (smallest = a->head);
+	else
+	{
+		smallest = a->head;
+		comparator = a->head->next;
+		while (size)
+		{
+			if (smallest->num > comparator->num && comparator->index == -1)
+				smallest = comparator;
+			if (smallest->num < comparator->num && smallest->index > -1)
+				smallest = comparator;
+			comparator = comparator->next;
+			size--;
+		}
+	}
+	return (smallest);
+}
+
+void	init_index(t_stack *a)
+{
+	int		index;
+	size_t	size;
+	t_node	*min;
+
+	index = 0;
+	size = a->size;
+	while (size)
+	{
+		min = find_min_for_index(a);
+		min->index = index;
+		index++;
+		size--;
+	}
+	printf("1st node index = %d\n", a->head->index);
+	printf("2nd node index = %d\n", a->head->next->index);
+	printf("3rd node index = %d\n", a->head->next->next->index);
+	printf("4th node index = %d\n", a->head->next->next->next->index);
+}
+
 static int	fill_stack_bigger_than_two(size_t size, t_node **node, char **input)
 {
 	t_node	*new;
@@ -72,9 +121,8 @@ void	delete_stack(t_stack *stack)
 	while (stack->size)
 	{
 		tmp = stack->head;
-		printf("tmp = %d\n", tmp->num);
 	  	stack->head = stack->head->prev;
-	  	printf("Node [%d] is next to be deleted.\n", tmp->num);
+	  	// printf("Node [%d] is next to be deleted.\n", tmp->num);
 	  	delete_node(tmp);
 		stack->size--;
 	}

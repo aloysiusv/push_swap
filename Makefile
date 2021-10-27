@@ -16,8 +16,8 @@ CFLAGS		=	-Wall -Wextra -Werror -g3
 OBJS		=	$(SRCS:.c=.o)
 HDR			=	push_swap.h
 SRCS		=	main.c parse_args.c \
-				swapping_pushing.c rotating.c\
-				utils.c utils_node.c utils_stack.c \
+				swapping_pushing.c rotating.c sorting.c \
+				utils.c utils_node.c utils_stack.c utils_sort.c \
 
 all:		$(NAME)
 

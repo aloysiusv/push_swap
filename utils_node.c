@@ -26,23 +26,23 @@ t_node	*create_node(int num)
 	return (node);
 }
 
-t_node	*add_top_node(t_node *current_head, int num)
-{
-	t_node	*top;
-
-	top = create_node(num);
-	if (top == NULL)
-		return (0);
-	if (current_head)
-	{
-		top->prev = current_head->prev;
-		top->next = current_head;
-		current_head->prev = top;
-	}
-	else
-		current_head = top;
-	return (top);
-}
+// t_node	*add_top_node(t_node *current_head, int num)
+// {
+// 	t_node	*top;
+//
+// 	top = create_node(num);
+// 	if (top == NULL)
+// 		return (0);
+// 	if (current_head)
+// 	{
+// 		top->prev = current_head->prev;
+// 		top->next = current_head;
+// 		current_head->prev = top;
+// 	}
+// 	else
+// 		current_head = top;
+// 	return (top);
+// }
 
 t_node	*add_bottom_node(t_node *current_tail, int num)
 {

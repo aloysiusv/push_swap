@@ -53,7 +53,7 @@ static t_node	*pop(t_stack *stack)
 	return (tmp);
 }
 
-static void	help_push(t_stack *stack, t_node *node)
+static void	add_top_node(t_stack *stack, t_node *node)
 {
 	if (stack->head == NULL)
 	{
@@ -74,13 +74,16 @@ void	push(t_stack *pushing, t_stack *receiving, char pushed_on)
 {
 	t_node	*node;
 
-	if ((node = pop(pushing)))
-		help_push(receiving, node);
-	printf("Node [%d] has been pushed.\n", receiving->head->num);
-	pushing->size--;
-	receiving->size++;
-	if (pushed_on == 'a')
-		write(1, "pa\n", 3);
-	if (pushed_on == 'b')
-		write(1, "pb\n", 3);
+	node = pop(pushing);
+	if (node != NULL)
+	{
+		add_top_node(receiving, node);
+		printf("Node [%d] has been pushed.\n", receiving->head->num);
+		pushing->size--;
+		receiving->size++;
+		if (pushed_on == 'a')
+			write(1, "pa\n", 3);
+		if (pushed_on == 'b')
+			write(1, "pb\n", 3);
+	}
 }

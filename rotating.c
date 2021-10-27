@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-void	top_node_to_bottom(t_stack *stack, char c)
+void	rotate(t_stack *stack, char c)
 {
 	t_node	*tmp;
 
@@ -32,12 +32,12 @@ void	top_node_to_bottom(t_stack *stack, char c)
 
 void	rotate_both(t_stack *a, t_stack *b)
 {
-	top_node_to_bottom(a, 0);
-	top_node_to_bottom(b, 0);
+	rotate(a, 0);
+	rotate(b, 0);
 	write(1, "rr\n", 3);
 }
 
-void	bottom_node_to_top(t_stack *stack, char c)
+void	reverse_rotate(t_stack *stack, char c)
 {
 	t_node	*tmp;
 
@@ -54,7 +54,7 @@ void	bottom_node_to_top(t_stack *stack, char c)
 
 void	reverse_rotate_both(t_stack *a, t_stack *b)
 {
-	bottom_node_to_top(a, 0);
-	bottom_node_to_top(b, 0);
+	reverse_rotate(a, 0);
+	reverse_rotate(b, 0);
 	write(1, "rrr\n", 4);
 }

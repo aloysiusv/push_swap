@@ -12,7 +12,7 @@
 
 NAME		=	push_swap
 CC			=	gcc
-CFLAGS		=	-Wall -Wextra -Werror -g3
+CFLAGS		=	-Wall -Wextra -Werror -g
 OBJS		=	$(SRCS:.c=.o)
 HDR			=	push_swap.h
 SRCS		=	main.c parse_args.c \
@@ -38,3 +38,5 @@ fclean:		clean
 re:			fclean all
 
 .PHONY:		all bonus clean fclean re
+
+# valgrind -s --leak-check=full --show-leak-kinds=all ./a.out 2 45 3

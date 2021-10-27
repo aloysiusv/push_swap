@@ -16,8 +16,8 @@ void	push_swap(t_stack *a, t_stack *b)
 {
 	(void)b;
 	init_index(a);
-// 	if (a->stack_size <= 5)
-// 		sort_5_or_less(a, b);
+	if (a->size <= 5)
+		sort_5_and_less(a, b);
 // 	if (a->stack_size <= 100)
 // 		sort_100_and_less(a, b);
 // 	if a->stack_size <= 500)
@@ -54,8 +54,8 @@ int	main(int argc, char **argv)
 			// push(a, b, 'b');
 			// push(a, b, 'b');
 			// push(b, a, 'a');
-			// bottom_node_to_top(a, 'a');
-			// top_node_to_bottom(b, 'b'); 
+			// reverse_rotate(a, 'a');
+			// rotate(b, 'b'); 
 			push_swap(a, b);
 		}
 		delete_stack(a);

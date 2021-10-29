@@ -12,32 +12,29 @@
 
 #include "push_swap.h"
 
-void	rotate(t_stack *stack, char c)
+void	rotate(t_stack *stack)
 {
 	t_node	*tmp;
 
 	if (stack->size <= 1)
 		return ;
 	tmp = stack->head;
-	// printf("stack->head before ra = %d\n", stack->head->num);
 	stack->head = stack->head->next;
-	// printf("stack->head after ra = %d\n", stack->head->num);
 	stack->head->prev = tmp;
-	// printf("stack->head->prev after ra = %d\n", stack->head->prev->num);
-	if (c == 'a')
+	if (stack->name == 'a')
 		write(1, "ra\n", 4);
-	if (c == 'b')
+	if (stack->name == 'b')
 		write(1, "rb\n", 4);
 }
 
 void	rotate_both(t_stack *a, t_stack *b)
 {
-	rotate(a, 0);
-	rotate(b, 0);
+	rotate(a);
+	rotate(b);
 	write(1, "rr\n", 3);
 }
 
-void	reverse_rotate(t_stack *stack, char c)
+void	reverse_rotate(t_stack *stack)
 {
 	t_node	*tmp;
 
@@ -46,15 +43,15 @@ void	reverse_rotate(t_stack *stack, char c)
 	tmp = stack->head;
 	stack->head = stack->head->prev;
 	stack->head->next = tmp;
-	if (c == 'a')
+	if (stack->name == 'a')
 		write(1, "rra\n", 4);
-	if (c == 'b')
+	if (stack->name == 'b')
 		write(1, "rrb\n", 4);
 }
 
 void	reverse_rotate_both(t_stack *a, t_stack *b)
 {
-	reverse_rotate(a, 0);
-	reverse_rotate(b, 0);
+	reverse_rotate(a);
+	reverse_rotate(b);
 	write(1, "rrr\n", 4);
 }

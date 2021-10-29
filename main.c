@@ -14,16 +14,14 @@
 
 void	push_swap(t_stack *a, t_stack *b)
 {
-	(void)b;
-	init_index(a);
-	if (a->size <= 5)
+		if (a->size <= 5)
 		sort_5_and_less(a, b);
-// 	if (a->stack_size <= 100)
-// 		sort_100_and_less(a, b);
-// 	if a->stack_size <= 500)
-// 		sort_500_and_less(a, b);
-// 	if (a->stack_size > 500)
-// 		printf("Let's radix lol.");
+// 		if (a->stack_size <= 100)
+// 			sort_100_and_less(a, b);
+// 		if a->stack_size <= 500)
+// 			sort_500_and_less(a, b);
+// 		if (a->stack_size > 500)
+// 			printf("Let's radix lol.");
 }
 
 int	main(int argc, char **argv)
@@ -38,7 +36,7 @@ int	main(int argc, char **argv)
 		if (a == NULL || b == NULL)
 			return (0);
 		init_stacks(a, b, argc - 1, argv + 1);
-		if (is_stack_sorted(a) == OK)
+		if (stack_sorted_at_this_pos(a) == argc - 2)
 		{
 			write(1, "Stack is already sorted.\n", 25);
 			delete_stack(a);
@@ -52,6 +50,7 @@ int	main(int argc, char **argv)
 			// push(a, b, 'b');
 			// push(a, b, 'b');
 			// push(a, b, 'b');
+			// swap(b, 'b');
 			// push(a, b, 'b');
 			// push(b, a, 'a');
 			// reverse_rotate(a, 'a');

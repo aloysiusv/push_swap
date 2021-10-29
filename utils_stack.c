@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-static t_node	*find_min_for_index(t_stack *a)
+static t_node	*find_next_min_value(t_stack *a)
 {
 	size_t	size;
 	t_node	*smallest;
@@ -29,9 +29,9 @@ static t_node	*find_min_for_index(t_stack *a)
 		comparator = a->head->next;
 		while (size)
 		{
-			if (smallest->num > comparator->num && comparator->index == -1)
+			if (smallest->value > comparator->value && comparator->index == -1)
 				smallest = comparator;
-			if (smallest->num < comparator->num && smallest->index > -1)
+			if (smallest->value < comparator->value && smallest->index > -1)
 				smallest = comparator;
 			comparator = comparator->next;
 			size--;
@@ -40,7 +40,7 @@ static t_node	*find_min_for_index(t_stack *a)
 	return (smallest);
 }
 
-void	init_index(t_stack *a)
+static void		init_index(t_stack *a)
 {
 	int		index;
 	size_t	size;
@@ -50,18 +50,14 @@ void	init_index(t_stack *a)
 	size = a->size;
 	while (size)
 	{
-		min = find_min_for_index(a);
+		min = find_next_min_value(a);
 		min->index = index;
 		index++;
 		size--;
 	}
-	printf("1st node index = %d\n", a->head->index);
-	printf("2nd node index = %d\n", a->head->next->index);
-	printf("3rd node index = %d\n", a->head->next->next->index);
-	printf("4th node index = %d\n", a->head->next->next->next->index);
 }
 
-static int	fill_stack_bigger_than_two(size_t size, t_node **node, char **input)
+static int		fill_stack_bigger_than_two(size_t size, t_node **node, char **input)
 {
 	t_node	*new;
 	size_t	i;
@@ -78,12 +74,14 @@ static int	fill_stack_bigger_than_two(size_t size, t_node **node, char **input)
 	return (0);
 }
 
-int	init_stacks(t_stack *a, t_stack *b, size_t nb_of_elements, char **input)
+int				init_stacks(t_stack *a, t_stack *b, size_t nb_of_elements, char **input)
 {
 	t_node	*node;
 
+	b->name = 'b';
 	b->size = 0;
 	b->head = NULL;
+	a->name = 'a';
 	a->size = nb_of_elements;
 	a->head = create_node(ft_atoi(input[0]));
 	node = add_bottom_node(a->head, ft_atoi(input[1]));
@@ -94,35 +92,20 @@ int	init_stacks(t_stack *a, t_stack *b, size_t nb_of_elements, char **input)
 		if (fill_stack_bigger_than_two(nb_of_elements, &node, input) == -1)
 			return (-1);
 	a->head->prev = node;
+	node->next = a->head;
+	init_index(a);
 	return (0);
 }
 
-t_bool	is_stack_sorted(t_stack *stack)
-{
-	t_node	*iterator;
-	t_node	*comparator;
-
-	iterator = stack->head;
-	comparator = stack->head->next;
-	while (iterator != stack->head->prev)
-	{
-		if (iterator->num > comparator->num)
-			return (NOT_OK);
-		iterator = iterator->next;
-		comparator = comparator->next;
-	}
-	return (OK);
-}
-
-void	delete_stack(t_stack *stack)
+void			delete_stack(t_stack *stack)
 {
 	t_node	*tmp;
 
 	while (stack->size)
 	{
 		tmp = stack->head;
-	  	stack->head = stack->head->prev;
-	  	// printf("Node [%d] is next to be deleted.\n", tmp->num);
+	  	stack->head = stack->head->next;
+	  	printf("Node [%d] is next to be deleted.\n", tmp->value);
 	  	delete_node(tmp);
 		stack->size--;
 	}

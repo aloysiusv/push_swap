@@ -19,7 +19,7 @@ t_node	*create_node(int num)
 	node = (t_node *)malloc(sizeof(t_node));
 	if (node == 0)
 		return (0);
-	node->num = num;
+	node->value = num;
 	node->index = -1;
 	node->prev = node;
 	node->next = node;

@@ -25,6 +25,7 @@ void	rotate(t_stack *stack)
 		write(1, "ra\n", 4);
 	if (stack->name == 'b')
 		write(1, "rb\n", 4);
+	stack->count_op++;
 }
 
 void	rotate_both(t_stack *a, t_stack *b)
@@ -32,6 +33,7 @@ void	rotate_both(t_stack *a, t_stack *b)
 	rotate(a);
 	rotate(b);
 	write(1, "rr\n", 3);
+	a->count_op--;
 }
 
 void	reverse_rotate(t_stack *stack)
@@ -47,6 +49,7 @@ void	reverse_rotate(t_stack *stack)
 		write(1, "rra\n", 4);
 	if (stack->name == 'b')
 		write(1, "rrb\n", 4);
+	stack->count_op++;
 }
 
 void	reverse_rotate_both(t_stack *a, t_stack *b)
@@ -54,4 +57,5 @@ void	reverse_rotate_both(t_stack *a, t_stack *b)
 	reverse_rotate(a);
 	reverse_rotate(b);
 	write(1, "rrr\n", 4);
+	a->count_op--;
 }

@@ -28,6 +28,7 @@ void	swap(t_stack *stack)
 			write(1, "sa\n", 3);
 		if (stack->name == 'b')
 			write(1, "sb\n", 3);
+		stack->count_op++;
 	}
 }
 
@@ -36,6 +37,7 @@ void	swap_both(t_stack *a, t_stack *b)
 	swap(a);
 	swap(b);
 	write(1, "ss\n", 3);
+	a->count_op--;
 }
 
 static t_node	*pop(t_stack *stack)
@@ -88,5 +90,6 @@ void	push(t_stack *pushing, t_stack *receiving)
 			write(1, "pa\n", 3);
 		if (receiving->name == 'b')
 			write(1, "pb\n", 3);
+		pushing->count_op++;
 	}
 }

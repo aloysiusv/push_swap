@@ -57,6 +57,7 @@ int	main(int argc, char **argv)
 			// rotate(b, 'b'); 
 			push_swap(a, b);
 		}
+		printf("COUNT = %zu\n", a->count_op + b->count_op);
 		delete_stack(a);
 		delete_stack(b);
 	}

@@ -80,8 +80,10 @@ int				init_stacks(t_stack *a, t_stack *b, size_t nb_of_elements, char **input)
 
 	b->name = 'b';
 	b->size = 0;
+	b->count_op = 0;
 	b->head = NULL;
 	a->name = 'a';
+	a->count_op = 0;
 	a->size = nb_of_elements;
 	a->head = create_node(ft_atoi(input[0]));
 	node = add_bottom_node(a->head, ft_atoi(input[1]));

@@ -40,6 +40,7 @@ typedef struct s_stack
 {
 	char	name;
 	size_t	size;
+	size_t	count_op;
 	t_node	*head;
 }				t_stack;
 

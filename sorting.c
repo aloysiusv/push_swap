@@ -16,52 +16,31 @@ static void sort_2(t_stack *stack)
 {
     if (stack->head->index > stack->head->next->index)
 		swap(stack);
-    printf("Sort 2 done.\n");
 }
 
 static void	sort_3(t_stack *stack)
 {
-    size_t  pos_min;
+    size_t min_pos;
+    size_t max_pos;
 
-    pos_min = find_min_pos(stack);
-    if (pos_min == 0)
+    min_pos = find_min_pos(stack);
+    max_pos = find_max_pos(stack);
+    if (min_pos == 0 && max_pos == 1)
     {
         swap(stack);
         rotate(stack);
-        printf("Sort 3 done.\n");
-        return ;
     }
-    if (pos_min == 1)
+    if (min_pos == 1 && max_pos == 0)
+        rotate(stack);
+    if (min_pos == 1 && max_pos == 2)
+        swap(stack);
+    if (min_pos == 2 && max_pos == 0)
     {
-        if (stack->head->next->index == 0)
-        {
-            swap(stack);
-            printf("Sort 3 done.\n");
-            return ;
-        }
-        else
-        {
-            reverse_rotate(stack);
-            printf("Sort 3 done.\n");
-            return ;
-        }
+        swap(stack);
+        reverse_rotate(stack);
     }
-    if (pos_min == 2)
-    {
-        if (stack->head->next->index == 0)
-        {
-            rotate(stack);
-            printf("Sort 3 done.\n");
-            return ;
-        }
-        else
-        {
-            swap(stack);
-            reverse_rotate(stack);
-            printf("Sort 3 done.\n");
-            return ;
-        }
-    }
+    if (min_pos == 2 && max_pos == 1)
+        reverse_rotate(stack);
  }
 
 void    sort_4(t_stack *a, t_stack *b)
@@ -70,28 +49,26 @@ void    sort_4(t_stack *a, t_stack *b)
     push(a, b);
     sort_3(a);
     push(b, a);
-    printf("Sort 4 done.\n");
 }
 
 void	sort_5_and_less(t_stack *a, t_stack *b)
 {
-    (void)b;
     if (a->size == 2)
-    {
         sort_2(a);
-        return ;
-    }
     if (a->size == 3)
-    {
         sort_3(a);
-        return ;
-    }
     if (a->size == 4)
-    {
         sort_4(a, b);
-        return ;
+    if (a->size == 5)
+    {
+        put_min_top(a);
+        push(a, b);
+        put_min_top(a);
+        push(a, b);
+        sort_3(a);
+        push(b, a);
+        push(b, a);
     }
-
 }
 
 // void	sort_100_and_less(t_stack *a, t_stack *b)

@@ -45,16 +45,19 @@ static t_node	*pop(t_stack *stack)
 	t_node	*tmp;
 
 	tmp = stack->head;
-	if (stack->head->next == stack->head)
-		stack->head = NULL;
-	else
+	if (stack->head != NULL)
 	{
-		stack->head->prev->next = stack->head->next;
-		stack->head->next->prev = stack->head->prev;
-		stack->head = stack->head->next;
+		if (stack->head->next == stack->head)
+			stack->head = NULL;
+		else
+		{
+			stack->head->prev->next = stack->head->next;
+			stack->head->next->prev = stack->head->prev;
+			stack->head = stack->head->next;
+		}
+		tmp->prev = NULL;
+		tmp->next = NULL;
 	}
-	tmp->prev = NULL;
-	tmp->next = NULL;
 	return (tmp);
 }
 

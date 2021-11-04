@@ -15,29 +15,29 @@
 static t_node	*find_next_min_value(t_stack *a)
 {
 	size_t	size;
-	t_node	*smallest;
+	t_node	*min;
 	t_node	*comparator;
 
 	if (a->head == NULL)
 		return (NULL);
 	size = a->size;
 	if (size == 1)
-		return (smallest = a->head);
+		return (min = a->head);
 	else
 	{
-		smallest = a->head;
+		min = a->head;
 		comparator = a->head->next;
 		while (size)
 		{
-			if (smallest->value > comparator->value && comparator->index == -1)
-				smallest = comparator;
-			if (smallest->value < comparator->value && smallest->index > -1)
-				smallest = comparator;
+			if (min->value > comparator->value && comparator->index == -1)
+				min = comparator;
+			if (min->value < comparator->value && min->index > -1)
+				min = comparator;
 			comparator = comparator->next;
 			size--;
 		}
 	}
-	return (smallest);
+	return (min);
 }
 
 static void		init_index(t_stack *a)
@@ -57,7 +57,7 @@ static void		init_index(t_stack *a)
 	}
 }
 
-static int		fill_stack_bigger_than_two(size_t size, t_node **node, char **input)
+static int		fill_stack_more(size_t size, t_node **node, char **input)
 {
 	t_node	*new;
 	size_t	i;
@@ -74,24 +74,24 @@ static int		fill_stack_bigger_than_two(size_t size, t_node **node, char **input)
 	return (0);
 }
 
-int				init_stacks(t_stack *a, t_stack *b, size_t nb_of_elements, char **input)
+int				init_stacks(t_stack *a, t_stack *b, size_t size, char **input)
 {
 	t_node	*node;
 
+	a->name = 'a';
 	b->name = 'b';
+	a->size = size;
 	b->size = 0;
+	a->count_op = 0;
 	b->count_op = 0;
 	b->head = NULL;
-	a->name = 'a';
-	a->count_op = 0;
-	a->size = nb_of_elements;
 	a->head = create_node(ft_atoi(input[0]));
 	node = add_bottom_node(a->head, ft_atoi(input[1]));
 	if (a->head == NULL ||node == NULL)
 		return (-1);
 	a->head->next = node;
 	if (a->size > 2)
-		if (fill_stack_bigger_than_two(nb_of_elements, &node, input) == -1)
+		if (fill_stack_more(size, &node, input) == -1)
 			return (-1);
 	a->head->prev = node;
 	node->next = a->head;

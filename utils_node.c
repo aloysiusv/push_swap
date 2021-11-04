@@ -21,9 +21,9 @@ t_node	*create_node(int num)
 		return (0);
 	node->value = num;
 	node->index = -1;
+	node->touched = -1;
 	node->prev = node;
 	node->next = node;
-	printf("A node has been created.\n");
 	return (node);
 }
 

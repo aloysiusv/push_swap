@@ -123,25 +123,25 @@ void	sort_5_and_less(t_stack *a, t_stack *b)
     }
 }
 
-static int compare_positions(t_node **first, t_node **last, int pivot)
+static int compare_positions(t_node **first, t_node **last, int group)
 {
     int pos_first;
     int pos_last;
     int i;
 
     i = 0;
-    while (i < pivot)
+    while (i < group)
     {
-        if ((*first)->index >= 0 && (*first)->index < pivot)
+        if ((*first)->index >= 0 && (*first)->index < group)
             break ;
         *first = (*first)->next;
         i++;
     }
     pos_first = i;
     i = 0;
-    while (i < pivot)
+    while (i < group)
     {
-        if ((*last)->index >= 0 && (*last)->index < pivot)
+        if ((*last)->index >= 0 && (*last)->index < group)
             break ;
         *last = (*last)->prev;
         i++;
@@ -152,7 +152,7 @@ static int compare_positions(t_node **first, t_node **last, int pivot)
     return (1);
 }
 
-static void	push_most_efficient(t_stack *a, t_stack *b, int pivot)
+static void	push_most_efficient(t_stack *a, t_stack *b, int group)
 {
     t_node  *first;
     t_node  *last;
@@ -162,7 +162,7 @@ static void	push_most_efficient(t_stack *a, t_stack *b, int pivot)
         return ;
     first = a->head;
     last = a->head->prev;
-    best = compare_positions(&first, &last, pivot);
+    best = compare_positions(&first, &last, group);
     if (best == 0)
         while (a->head->index != first->index)
             rotate(a);
@@ -171,49 +171,32 @@ static void	push_most_efficient(t_stack *a, t_stack *b, int pivot)
             reverse_rotate(a);
     if (a->head->index < find_min(b) || a->head->index > find_max(b))
         put_max_top(b);
-    // else
-    //     put_min_top(b);
+    else
+        put_min_top(b);
     push(a, b);
 }
 
-// static void sort_6_52(t_stack *a, t_stack *b)
-// {
-
-// }
-
 void    sort_100_and_less(t_stack *a, t_stack *b)
 {
-    int pivot;
-    int fifth;
+    int middle;
+    int group;
+    int size;
 
-    // if (a->size < 52)
-    //     sort_6_52(a, b);
-    if (a->size >= 52 && a->size <= 500)
+    size = a->size;
+    middle = size / 2;
+    group = size / 5;
+    if (a->size % 2 == 1)
     {
-        pivot = a->size / 11;
-        fifth = pivot;
+        middle -= 1;
+        group -= 1;
     }
-    // if (a->size % 2 != 0)
-    // {
-
-    // }
-    while (a->size != 0)
-    {
-        while (b->size != pivot)
-            push_most_efficient(a, b, pivot);
-        pivot = pivot + fifth;
-    }
-    // while (b->size != pivot)
-    //     push_most_efficient(a, b, pivot);
-    // pivot = pivot + pivot;
-    // while (b->size != pivot)
-    //     push_most_efficient(a, b, pivot);
-    // pivot = pivot + pivot;
-    // while (b->size != pivot)
-    //     push_most_efficient(a, b, pivot);
-    // pivot = pivot + pivot;
-//     while (b->size != pivot)
-//         push_most_efficient(a, b, pivot);
+    while (a->size != 3)
+        while (b->size != size - 3)
+        {
+            push_most_efficient(a, b, group);
+            group = group + group;
+        }
+    sort_3(a);
     while (b->size > 0)
     {
         put_max_top(b);

@@ -123,25 +123,25 @@ void	sort_5_and_less(t_stack *a, t_stack *b)
     }
 }
 
-static int compare_positions(t_node **first, t_node **last, int group)
+static int find_best_node_to_push(t_node **first, t_node **last, int half)
 {
     int pos_first;
     int pos_last;
     int i;
 
     i = 0;
-    while (i < group)
+    while (i < half)
     {
-        if ((*first)->index >= 0 && (*first)->index < group)
+        if ((*first)->index >= 0 && (*first)->index < half)
             break ;
         *first = (*first)->next;
         i++;
     }
     pos_first = i;
     i = 0;
-    while (i < group)
+    while (i < half)
     {
-        if ((*last)->index >= 0 && (*last)->index < group)
+        if ((*last)->index >= 0 && (*last)->index < half)
             break ;
         *last = (*last)->prev;
         i++;
@@ -152,7 +152,7 @@ static int compare_positions(t_node **first, t_node **last, int group)
     return (1);
 }
 
-static void	push_most_efficient(t_stack *a, t_stack *b, int group)
+static void	push_first_half(t_stack *a, t_stack *b, int half)
 {
     t_node  *first;
     t_node  *last;
@@ -162,56 +162,123 @@ static void	push_most_efficient(t_stack *a, t_stack *b, int group)
         return ;
     first = a->head;
     last = a->head->prev;
-    best = compare_positions(&first, &last, group);
+    best = find_best_node_to_push(&first, &last, half);
     if (best == 0)
         while (a->head->index != first->index)
             rotate(a);
     else if (best == 1)
         while (a->head->index != last->index)
             reverse_rotate(a);
-    if (a->head->index < find_min(b) || a->head->index > find_max(b))
-        put_max_top(b);
-    else
-        put_min_top(b);
     push(a, b);
 }
 
+static void push_halves(t_stack *a, t_stack *b)
+{
+    int half;
+
+    half = a->size / 2;
+    while (a->size != half)
+        push_first_half(a, b, half);
+    while (a->size)
+        push(a, b);
+}
+
+static void rotate_to_optimal_pos(t_stack *a, int current_index)
+{
+    t_node  *iterator;
+    int     mid; // just half my stack
+    int     idx_mid; // the index at that position
+    int     i;
+
+    iterator = a->head;
+    mid = a->size / 2;
+    if (a->size % 2 == 1)
+        mid += 1;
+    idx_mid = 0;
+    i = 0;
+    while (i != mid) // loop to identify which index is at the mid
+    {
+        idx_mid = iterator->index;
+        iterator = iterator->next;
+        i++;
+    }
+    if (current_index < idx_mid) // it always have to be 54 > 86 > 98, if you want to push 86.
+        while (a->head->prev->index > current_index && a->head->index < current_index)
+            rotate(a);
+    else
+        while (a->head->prev->index > current_index && a->head->index < current_index)
+            reverse_rotate(a);
+}
+
+void    insertion_sort(t_stack *stack_a, t_stack *stack_b)
+{
+    int b_first; 
+    int b_second;
+    int a_first;
+    int a_last;
+    
+    if (stack_a->head == NULL)
+    {
+        push(stack_b, stack_a);
+        push(stack_b, stack_a);
+        sort_2(stack_a);
+        return ;
+    }
+    if (stack_b->head == NULL)
+        return ;
+    b_first = stack_b->head->index;
+    b_second = stack_b->head->next->index;
+    a_first = stack_a->head->index;
+    a_last = stack_a->head->prev->index;
+    if (b_first < b_second)
+    {
+        swap(stack_b); //questionable efficiency
+        printf("Swapped B and Bnext\n");
+    }
+    if (b_first < find_min(stack_a) || b_first > find_max(stack_a))
+    {
+        put_min_top(stack_a);
+        push(stack_b, stack_a);
+        printf("Put min top!\n");
+        return ;
+    }
+    if (b_first < a_first)
+    {
+        if (b_first < a_last)
+            rotate_to_optimal_pos(stack_a, b_first); // 89 97 71 72 82, wanna push 77
+        // you have to RA or RRA until a->last < 77 AND a->first > 77
+        // go figure whether to RA or RRA by finding out the range in index (here 72 - 82. aka 2 - 10)
+        push(stack_b, stack_a);
+        printf("B was < to A!\n");
+        return ;
+    }
+    if (b_first > a_first)
+    {
+        if (b_first < a_last)
+            rotate_to_optimal_pos(stack_a, b_first);
+        push(stack_b, stack_a);
+        printf("B was > to A!\n");
+        return ;
+    }
+    printf("Hello\n");
+}  
+
 void    sort_100_and_less(t_stack *a, t_stack *b)
 {
-    int middle;
-    int group;
-    int size;
-
-    size = a->size;
-    middle = size / 2;
-    group = size / 5;
-    if (a->size % 2 == 1)
-    {
-        middle -= 1;
-        group -= 1;
-    }
-    while (a->size != 3)
-        while (b->size != size - 3)
-        {
-            push_most_efficient(a, b, group);
-            group = group + group;
-        }
-    sort_3(a);
-    while (b->size > 0)
-    {
-        put_max_top(b);
-        push(b, a);
-    }
+    push_halves(a, b);
+    while (b->size)
+        insertion_sort(a, b);
+    
 }
     
-    // while (a->size != 1)
-    // {
-    //     if (stack_sorted_at_this_pos(a) == a->size - 1)
-    //         break ;
-    //     if (a->head->index > a->head->next->index)
-    //         swap(a);
-    //     if (a->head->index < a->head->next->index)
-    //         push(a, b);
+// while (a->size != 1)
+// {
+//     if (stack_sorted_at_this_pos(a) == a->size - 1)
+//         break ;
+//     if (a->head->index > a->head->next->index)
+//         swap(a);
+//     if (a->head->index < a->head->next->index)
+//         push(a, b);
 //     }
 //     while (b->size != 1)
 //     {

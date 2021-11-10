@@ -39,7 +39,6 @@ typedef struct s_node
 
 typedef struct s_stack
 {
-	char	name;
 	int		size;
 	size_t	count_op;
 	t_node	*head;
@@ -53,21 +52,25 @@ long	ft_atol(const char *num_ascii);
 t_bool	is_input_valid(size_t nb_of_elements, char **input);
 void	push_swap(t_stack *a, t_stack *b);
 
-void	swap(t_stack *stack);
+void	swap(t_stack *stack, char name);
 void	swap_both(t_stack *a, t_stack *b);
-void	push(t_stack *pushing, t_stack *receiving);
-void	rotate(t_stack *stack);
+void	push(t_stack *pushing, t_stack *receiving, char name);
+void	rotate(t_stack *stack, char name);
 void	rotate_both(t_stack *a, t_stack *b);
-void	reverse_rotate(t_stack *stack);
+void	reverse_rotate(t_stack *stack, char name);
 void	reverse_rotate_both(t_stack *a, t_stack *b);
 
+void	sort_3(t_stack *a);
 void	sort_5_and_less(t_stack *a, t_stack *b);
 void	sort_100_and_less(t_stack *a, t_stack *b);
 void	sort_500_and_less(t_stack *a, t_stack *b);
+
+int     find_min(t_stack *stack);
+int     find_max(t_stack *stack);
 int		find_min_pos(t_stack *stack);
 int		find_max_pos(t_stack *stack);
-void	put_min_top(t_stack *stack);
-void	put_max_top(t_stack *stack);
+void	put_min_top(t_stack *stack, char name);
+void	put_max_top(t_stack *stack, char name);
 
 t_node	*create_node(int num);
 t_node	*add_bottom_node(t_node *current_node, int num);

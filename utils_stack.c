@@ -78,8 +78,6 @@ int				init_stacks(t_stack *a, t_stack *b, size_t size, char **input)
 {
 	t_node	*node;
 
-	a->name = 'a';
-	b->name = 'b';
 	a->size = size;
 	b->size = 0;
 	a->count_op = 0;

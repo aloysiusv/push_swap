@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-void	swap(t_stack *stack)
+void	swap(t_stack *stack, char name)
 {
 	t_node	tmp[1];
 
@@ -24,9 +24,9 @@ void	swap(t_stack *stack)
 		tmp->index = stack->head->index;
 		stack->head->index = stack->head->next->index;
 		stack->head->next->index = tmp->index;
-		if (stack->name == 'a')
+		if (name == 'a')
 			write(1, "sa\n", 3);
-		if (stack->name == 'b')
+		if (name == 'b')
 			write(1, "sb\n", 3);
 		stack->count_op++;
 	}
@@ -34,8 +34,8 @@ void	swap(t_stack *stack)
 
 void	swap_both(t_stack *a, t_stack *b)
 {
-	swap(a);
-	swap(b);
+	swap(a, 0);
+	swap(b, 0);
 	write(1, "ss\n", 3);
 	a->count_op--;
 }
@@ -78,7 +78,7 @@ static void	add_top_node(t_stack *stack, t_node *node)
 	stack->head = node;
 }
 
-void	push(t_stack *pushing, t_stack *receiving)
+void	push(t_stack *pushing, t_stack *receiving, char name)
 {
 	t_node	*node;
 
@@ -89,9 +89,9 @@ void	push(t_stack *pushing, t_stack *receiving)
 		printf("Node [%d] has been pushed.\n", receiving->head->value);
 		pushing->size--;
 		receiving->size++;
-		if (receiving->name == 'a')
+		if (name == 'a')
 			write(1, "pa\n", 3);
-		if (receiving->name == 'b')
+		if (name == 'b')
 			write(1, "pb\n", 3);
 		pushing->count_op++;
 	}

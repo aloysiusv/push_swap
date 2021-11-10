@@ -12,17 +12,21 @@
 
 NAME		=	push_swap
 CC			=	gcc
-CFLAGS		=	-Wextra -g3 -fsanitize=address
+CFLAGS		=	-Wall -Werror -Wextra
 OBJS		=	$(SRCS:.c=.o)
 HDR			=	push_swap.h
 SRCS		=	main.c parse_args.c \
 				swapping_pushing.c rotating.c sorting.c \
+				five_or_less.c utils_min_max.c \
 				utils.c utils_node.c utils_stack.c utils_sort.c \
 
 all:		$(NAME)
 
 $(NAME):	$(OBJS)
 			$(CC) $(CFLAGS) $(OBJS)
+
+debug:		$(OBJS)
+			$(CC) $(CFLAGS)-g3 -fsanitize=address $(OBJS)
 
 bonus:		$(NAME)
 

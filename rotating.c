@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-void	rotate(t_stack *stack)
+void	rotate(t_stack *stack, char name)
 {
 	t_node	*tmp;
 
@@ -21,22 +21,22 @@ void	rotate(t_stack *stack)
 	tmp = stack->head;
 	stack->head = stack->head->next;
 	stack->head->prev = tmp;
-	if (stack->name == 'a')
+	if (name == 'a')
 		write(1, "ra\n", 4);
-	if (stack->name == 'b')
+	if (name == 'b')
 		write(1, "rb\n", 4);
 	stack->count_op++;
 }
 
 void	rotate_both(t_stack *a, t_stack *b)
 {
-	rotate(a);
-	rotate(b);
+	rotate(a, 0);
+	rotate(b, 0);
 	write(1, "rr\n", 3);
 	a->count_op--;
 }
 
-void	reverse_rotate(t_stack *stack)
+void	reverse_rotate(t_stack *stack, char name)
 {
 	t_node	*tmp;
 
@@ -45,17 +45,17 @@ void	reverse_rotate(t_stack *stack)
 	tmp = stack->head;
 	stack->head = stack->head->prev;
 	stack->head->next = tmp;
-	if (stack->name == 'a')
+	if (name == 'a')
 		write(1, "rra\n", 4);
-	if (stack->name == 'b')
+	if (name == 'b')
 		write(1, "rrb\n", 4);
 	stack->count_op++;
 }
 
 void	reverse_rotate_both(t_stack *a, t_stack *b)
 {
-	reverse_rotate(a);
-	reverse_rotate(b);
+	reverse_rotate(a, 0);
+	reverse_rotate(b, 0);
 	write(1, "rrr\n", 4);
 	a->count_op--;
 }

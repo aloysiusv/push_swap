@@ -34,7 +34,11 @@ int	main(int argc, char **argv)
 		a = (t_stack *)malloc(sizeof(t_stack));
 		b = (t_stack *)malloc(sizeof(t_stack));
 		if (a == NULL || b == NULL)
+		{
+			delete_stack(a);
+			delete_stack(b);
 			return (0);
+		}
 		init_stacks(a, b, argc - 1, argv + 1);
 		if (is_stack_sorted(a) == OK)
 		{

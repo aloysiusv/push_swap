@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 15:42:54 by lrandria          #+#    #+#             */
-/*   Updated: 2021/11/10 17:34:47 by lrandria         ###   ########.fr       */
+/*   Updated: 2021/11/15 00:52:19 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	sort_3(t_stack *stack)
         reverse_rotate(stack, 'a');
     }
     if (min_pos == 2 && max_pos == 1)
-        reverse_rotate(stack, 'a');
+		reverse_rotate(stack, 'a');
  }
 
 static void sort_4(t_stack *a, t_stack *b)

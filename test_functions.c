@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 19:15:34 by lrandria          #+#    #+#             */
-/*   Updated: 2021/11/12 19:34:26 by lrandria         ###   ########.fr       */
+/*   Updated: 2021/11/15 03:43:01 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,54 +44,120 @@ static int choose_r_rr_groups(t_node **first, t_node **last, int group)
 static void	push_first_group(t_stack *a, t_stack *b, int group)
 {
     t_node  *first;
-	// t_node	*second;
     t_node  *last;
     int     best;
 
-    if (!from->head)
+    if (!a->head)
         return ;
-    first = from->head;
-	// second = from->head->next;
-    last = from->head->prev;
-	// if (second->index <= group)
-	// {
-	// 	swap(a, 'a');
-	// 	push(a, b, 'b');
-	// 	return ;
-	// }
+    first = a->head;
+    last = a->head->prev;
     best = choose_r_rr_groups(&first, &last, group);
     if (best == 0)
-        while (from->head->index != first->index)
+        while (a->head->index != first->index)
             rotate(a, 'a');
-    else if (best == 1)
-        while (from->head->index != last->index)
+    else
+        while (a->head->index != last->index)
             reverse_rotate(a, 'a');
     push(a, b, 'b');
 }
 
 static void tame_chaos(t_stack *a, t_stack *b)
 {
-    while (from->size != 50)    
-        push_first_group(a, b, 49);
-    // while (from->size != 60)
-    //     push_first_group(a, b, 39);
-    // while (from->size != 40)
-    //     push_first_group(a, b, 59);
-    // while (from->size != 20)
-        // push_first_group(a, b, 79);
-    while (from->size != 3)
-        push_first_group(a, b, 99);
-	sort_3(a);
+    int	mid;
+
+	if (a->size < 100)
+	{
+		mid = a->size / 2;
+		while (a->size != mid)    
+        	push_first_group(a, b, mid);
+    	while (a->size != 2)
+			push(a, b, 'b');
+		sort_2(a);
+		while (a->size)
+		{
+			put_min_top(a, 'a');
+			push(a, b, 'b');
+		}
+	}
+ 	if (a->size == 100)
+	{
+		while (a->size != 80)    
+        	push_first_group(a, b, 19);
+    	while (a->size != 60)
+        	push_first_group(a, b, 39);
+    	while (a->size != 40)
+        	push_first_group(a, b, 59);
+    	while (a->size != 20)
+        	push_first_group(a, b, 79);
+   		while (a->size)
+    	{
+			push_first_group(a, b, 99);
+		}
+		// while (b->size)
+		// {
+		// 	put_max_top(b, 'b');
+		// 	push(b, a, 'a');
+		// }
+		// return ;
+	}
+	if (a->size == 500)
+	{
+		while (a->size != 455)    
+        	push_first_group(a, b, 44);
+    	while (a->size != 410)
+        	push_first_group(a, b, 89);
+    	while (a->size != 365)
+        	push_first_group(a, b, 134);
+    	while (a->size != 320)
+        	push_first_group(a, b, 179);
+		while (a->size != 275)
+        	push_first_group(a, b, 224);
+		while (a->size != 230)
+        	push_first_group(a, b, 269);
+		while (a->size != 185)
+        	push_first_group(a, b, 314);
+		while (a->size != 140)
+        	push_first_group(a, b, 359);
+		while (a->size != 95)
+        	push_first_group(a, b, 404);
+		while (a->size != 50)
+        	push_first_group(a, b, 449);
+   		while (a->size)
+    	{
+			push_first_group(a, b, 499);
+		}
+		// while (b->size)
+		// {
+		// 	put_max_top(b, 'b');
+		// 	push(b, a, 'a');
+		// }
+		// return ;
+	}
+
 }
 
 static t_node  *find_best_pal(t_stack *stack, int current_index)
 {
     t_node  *iterator;
+	t_node	*pal;
+	int		size;
  
     iterator = stack->head;
-    while (!(iterator->prev->index < current_index && iterator->index > current_index))
-        iterator = iterator->next;
-    return (iterator);
+	pal = stack->head;
+	size = stack->size;
+	printf("Current index = %d\n", current_index);
+    while (size)
+    {
+		if (iterator->prev->index < current_index && iterator->index > current_index)
+		{
+			pal = iterator;
+			break ;
+		}
+		else
+			iterator = iterator->next;
+		size--;
+	}
+    return (pal);
 }
 
 static int	find_pos(t_stack *stack, int index)
@@ -112,139 +178,112 @@ static int	find_pos(t_stack *stack, int index)
 static int	calculate_steps_to_top(t_stack *stack, int index)
 {
 	int	size;
+	int	mid;
 	int	index_pos;
 	int	res;
 
-	size == stack->size;
+	size = stack->size;
+	mid = size / 2;
 	index_pos = find_pos(stack, index);
-	res = size - index_pos;
-	return (res)
+	if (index_pos < mid)
+		res = index_pos;
+	else
+		res = size - index_pos;
+	return (res);
 }
 
-static int	calculate_moves(t_stack *from, t_stack *to, int to_insert)
+static int	calculate_moves(t_stack *a, t_stack *b, int current_index)
 {
 	t_node	*pal;
-	int	insert_top_count;
-	int	pal_top_count;
+	int	insert_moves;
+	int	pal_moves;
 	int	moves;
 
-	pal = find_best_pal(to, to_insert);
-	pal_top_count = calculate_steps_to_top(to, pal->index);
-	insert_top_count = calculate_steps_to_top(from, to_insert);
-	moves = pal_top_count + insert_top_count + 1;
+	pal = find_best_pal(a, current_index);
+	pal_moves = calculate_steps_to_top(a, pal->index);
+	insert_moves = calculate_steps_to_top(b, current_index);
+	moves = pal_moves + insert_moves + 1;
+	printf("Moves = %d\n", moves);
 	return (moves);
 }
 
-static int	find_cheapest_node(t_stack *a, t_stack *b, int from_top_node, int i)
+static t_node	*find_cheapest_node(t_stack *a, t_stack *b)
 {
-	int	from_second_node;
-	int	from_last_node;
-	int best_node;
-	int j;
-	int	k;
+	t_node	*best_node;
+	t_node	*comparator;
+	int		size;
+	int		group;
 
-	from_second_node = from->head->next->index;
-	from_last_node = from->head->prev->index;
-	i = calculate_moves(a, b, from_top_node);
-	j = calculate_moves(a, b, from_second_node);
-	k = calculate_moves(a, b, from_last_node);
-	if (i > j && i > k)
-		return (best_node = from_top_node);
-	else if (j > i && j > k)
-		return (best_node = from_second_node);
-	else if (k > j && k > j)
-		return (best_node = from_last_node);
-	else
-		return (best_node = from_top_node);
-}
-
-void    insertion_sort(t_stack *stack_a, t_stack *stack_b)
-{
-    int b_top_node;
-    int best_pos;
-    int mid;
-
-    if (stack_b->head == NULL)
-        return ;
-    b_top_node = stack_b->head->index;
-    if (b_top_node < find_min(stack_a) || b_top_node > find_max(stack_a))
-    {
-        put_min_top(stack_a, 'a');
-        push(stack_b, stack_a, 'a');
-        return ;
-    }
-    mid = stack_from->size / 2;
-    best_pos = find_optimal_pos(stack_a, b_top_node);
-    while (!(stack_from->head->prev->index < b_top_node && stack_from->head->index > b_top_node))
-    {
-        if (best_pos < mid) 
-            rotate(stack_a, 'a');
-        else
-            reverse_rotate(stack_a, 'a');
-    }
-    push(stack_b, stack_a, 'a');
-}
-
-void    optimal_insertion_sort(t_stack *from, t_stack *to, char name)
-{
-    int from_top_node;
-	int	from_second_node;
-	int	from_last_node;
-	int best_node;
-    int mid;
-
-    if (from->head == NULL)
-        return ;
-	if (to->size == 0)
+	best_node = b->head;
+	comparator = b->head->next;
+	best_node->moves = calculate_moves(a, b, best_node->index);
+	size = b->size;
+	group = size;
+	while (size - 1)
 	{
-		push(from, to, name);
-		push(from, to, name);
-		put_max_top(to, name);
-		push(from, to, name);
-		put_max_top(to, name);
-		return ;
+		comparator->moves = calculate_moves(a, b, comparator->index);
+		if (comparator->moves < best_node->moves && comparator->index >= group)
+			best_node = comparator;
+		comparator = comparator->next;
+		size--;
 	}
-    from_top_node = from->head->index;
-	from_second_node = from->head->next->index;
-	from_last_node = from->head->prev->index; 
-    if (from_top_node < find_min(to) || from_top_node > find_max(to))
+	return (best_node);
+}
+
+void    optimal_insertion_sort(t_stack *b, t_stack *a)
+{
+    t_node	*b_top_node;
+	t_node	*best_node;
+	t_node	*best_pal;
+    int 	mid;
+
+    if (b->head == NULL)
+		return ;
+    b_top_node = b->head;
+    if (b_top_node->index < find_min(a) || b_top_node->index > find_max(a))
     {
-        put_max_top(to, name);
-        push(from, to, name);
+        put_min_top(a, 'a');
+        push(b, a, 'a');
         return ;
     }
-    mid = to->size / 2;
-	best_node = find_cheapest_node(from, to, from_top_node, 0);
-    while (!(to->head->prev->index < best_node && to->head->index > best_node))
+	mid = a->size / 2;
+	best_node = find_cheapest_node(a, b);
+	printf("Cheapest node is %d\n", best_node->index);
+	while (b->head->index != best_node->index)
+	{
+		if (find_pos(b, best_node->index) <= mid) 
+            rotate(b, 'b');
+        else
+            reverse_rotate(b, 'b');
+	}
+	best_pal = find_best_pal(a, best_node->index);
+	printf("Best pal is %d\n", best_pal->index);
+    while (a->head->index != best_pal->index)
     {
-        // if (find_pos(b, ) < mid) 
-        //     rotate(to, name);
-        // else
-        //     reverse_rotate(to, name);
+		if (find_pos(a, best_pal->index) <= mid) 
+            rotate(a, 'a');
+        else
+            reverse_rotate(a, 'a');
     }
-    push(from, to, name);
+    push(b, a, 'a');
 }
 
-void    sort_100_and_less(t_stack *from, t_stack *to)
+void    sort_100_and_less(t_stack *a, t_stack *b)
 {
-	// tame_chaos(a, b);
-	while (from->size)
-		optimal_insertion_sort(from, to, 'b');
-    // while (b->size)
- 	// {
-    //     put_max_top(b, 'b');
-	// 	push(b, a, 'a');
-	// }
-    // put_min_top(a, 'a');
+	tame_chaos(a, b);
+	while (b->size)
+		optimal_insertion_sort(b, a);
+	while (a->head->index != 0)
+		put_min_top(a, 'a');
 }
 
-// while (from->size != 1)
+// while (a->size != 1)
 // {
-//     if (stack_sorted_at_this_pos(a) == from->size - 1)
+//     if (stack_sorted_at_this_pos(a) == a->size - 1)
 //         break ;
-//     if (from->head->index > from->head->next->index)
+//     if (a->head->index > a->head->next->index)
 //         swap(a);
-//     if (from->head->index < from->head->next->index)
+//     if (a->head->index < a->head->next->index)
 //         push(a, b);
 //     }
 //     while (b->size != 1)
@@ -253,8 +292,8 @@ void    sort_100_and_less(t_stack *from, t_stack *to)
 //             swap(b);
 //         if (b->head->index > b->head->next->index)
 //             push(b, a);
-//         }
+//     }
 //     push(b, a);
-//     if (stack_sorted_at_this_pos(a) != from->size - 1)
+//     if (stack_sorted_at_this_pos(a) != a->size - 1)
 //         sort_100_and_less(a, b);
 // } TROLOLOLOLO.

@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 11:30:04 by lrandria          #+#    #+#             */
-/*   Updated: 2021/11/10 19:40:07 by lrandria         ###   ########.fr       */
+/*   Updated: 2021/11/15 00:36:00 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	put_min_top(t_stack *stack, char name)
 	min = find_min_pos(stack);
 	if (min == 0)
 		return ;
-	if (min == 1)
+	if (min == 1 && size < 4)
 		swap(stack, name);
 	while (find_min_pos(stack) != 0)
 	{
@@ -57,13 +57,15 @@ void	put_min_top(t_stack *stack, char name)
 void	put_max_top(t_stack *stack, char name)
 {
 	int	max;
+	int	size;
 
-	if (!stack->size)
+	size = stack->size;
+	if (!size)
 		return ;
 	max = find_max_pos(stack);
 	if (max == 0)
 		return ;
-	if (max == 1)
+	if (max == 1  && size < 4)
 		swap(stack, name);
 	while (find_max_pos(stack) != 0)
 	{

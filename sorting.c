@@ -125,6 +125,29 @@ void    insertion_sort(t_stack *stack_a, t_stack *stack_b)
     push(stack_b, stack_a, 'a');
 }
 
+static t_node	*find_cheapest_node(t_stack *a, t_stack *b)
+{
+	t_node	*iterator;
+	t_node	*comparator;
+	t_node	*best_node;
+	int		size;
+
+	iterator = b->head;
+	comparator = b->head;
+	best_node = b->head;
+	best_node->moves = calculate_moves(a, b, iterator->index);
+	size = b->size;
+	while (size)
+	{
+		comparator->moves = calculate_moves(a, b, iterator->index);
+		if (comparator->moves < best_node->moves)
+			best_node = comparator;
+		iterator = iterator->next;
+		size--;
+	}
+	return (best_node);
+}
+
 void    sort_100_and_less(t_stack *a, t_stack *b)
 {
     tame_chaos(a, b);

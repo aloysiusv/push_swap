@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 19:15:34 by lrandria          #+#    #+#             */
-/*   Updated: 2021/11/15 03:43:01 by lrandria         ###   ########.fr       */
+/*   Updated: 2021/11/16 19:21:55 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,11 @@ static void	push_first_group(t_stack *a, t_stack *b, int group)
     best = choose_r_rr_groups(&first, &last, group);
     if (best == 0)
         while (a->head->index != first->index)
-            rotate(a, 'a');
+            rotate(a);
     else
         while (a->head->index != last->index)
-            reverse_rotate(a, 'a');
-    push(a, b, 'b');
+            reverse_rotate(a);
+    push(a, b);
 }
 
 static void tame_chaos(t_stack *a, t_stack *b)
@@ -68,16 +68,27 @@ static void tame_chaos(t_stack *a, t_stack *b)
 	if (a->size < 100)
 	{
 		mid = a->size / 2;
+		if (a->size % 2 != 0)
+		{
+			mid += 1;
+			while (a->size != mid)    
+        		push_first_group(a, b, mid - 1);
+    		while (a->size)
+				push(a, b);
+			return ;
+		}
 		while (a->size != mid)    
         	push_first_group(a, b, mid);
-    	while (a->size != 2)
-			push(a, b, 'b');
-		sort_2(a);
-		while (a->size)
-		{
-			put_min_top(a, 'a');
-			push(a, b, 'b');
-		}
+    	while (a->size)
+			push(a, b);
+		// sort_3(a);
+		// printf("Head = %d, Second = %d, Last = %d\n", a->head->index, 
+		// a->head->next->index, a->head->prev->index);
+	// 	while (a->size)
+	// 	{
+	// 		put_min_top(a);
+	// 		push(a, b);
+	// 	}
 	}
  	if (a->size == 100)
 	{
@@ -90,13 +101,11 @@ static void tame_chaos(t_stack *a, t_stack *b)
     	while (a->size != 20)
         	push_first_group(a, b, 79);
    		while (a->size)
-    	{
 			push_first_group(a, b, 99);
-		}
 		// while (b->size)
 		// {
-		// 	put_max_top(b, 'b');
-		// 	push(b, a, 'a');
+		// 	put_max_top(b);
+		// 	push(b, a);
 		// }
 		// return ;
 	}
@@ -128,82 +137,67 @@ static void tame_chaos(t_stack *a, t_stack *b)
 		}
 		// while (b->size)
 		// {
-		// 	put_max_top(b, 'b');
-		// 	push(b, a, 'a');
+		// 	put_max_top(b);
+		// 	push(b, a);
 		// }
 		// return ;
 	}
 
 }
 
-static t_node  *find_best_pal(t_stack *stack, int current_index)
+static t_node  *find_senpai(t_stack *stack, int current_index)
 {
     t_node  *iterator;
-	t_node	*pal;
+	t_node	*senpai;
 	int		size;
- 
-    iterator = stack->head;
-	pal = stack->head;
+
+	iterator = stack->head;
+	senpai = stack->head;
 	size = stack->size;
-	printf("Current index = %d\n", current_index);
     while (size)
     {
 		if (iterator->prev->index < current_index && iterator->index > current_index)
 		{
-			pal = iterator;
+			senpai = iterator;
 			break ;
 		}
-		else
-			iterator = iterator->next;
+		iterator = iterator->next;
 		size--;
 	}
-    return (pal);
-}
-
-static int	find_pos(t_stack *stack, int index)
-{
-	t_node *iterator;
-	int	i;
-
-	iterator = stack->head;
-	i = 0;
-	while (iterator->index != index)
-	{
-		iterator = iterator->next;
-		i++;
-	}
-	return (i);
+    return (senpai);
 }
 
 static int	calculate_steps_to_top(t_stack *stack, int index)
 {
-	int	size;
-	int	mid;
 	int	index_pos;
 	int	res;
 
-	size = stack->size;
-	mid = size / 2;
 	index_pos = find_pos(stack, index);
-	if (index_pos < mid)
+	if (index_pos <= stack->size / 2)
 		res = index_pos;
 	else
-		res = size - index_pos;
+		res = stack->size - index_pos;
 	return (res);
 }
 
 static int	calculate_moves(t_stack *a, t_stack *b, int current_index)
 {
-	t_node	*pal;
-	int	insert_moves;
-	int	pal_moves;
+	t_node	*senpai;
+	int	index_moves;
+	int	senpai_moves;
 	int	moves;
 
-	pal = find_best_pal(a, current_index);
-	pal_moves = calculate_steps_to_top(a, pal->index);
-	insert_moves = calculate_steps_to_top(b, current_index);
-	moves = pal_moves + insert_moves + 1;
-	printf("Moves = %d\n", moves);
+	// printf("Current index is = %d\n", current_index);
+	if (a->head == NULL || b->head == NULL)
+		return (0);
+	senpai = find_senpai(a, current_index);
+	// printf("Senpai is = %d\n", senpai->value);
+	senpai_moves = calculate_steps_to_top(a, senpai->index);
+	// printf("Senpai moves is = %d\n", senpai_moves);
+	index_moves = calculate_steps_to_top(b, current_index);
+	// printf("Index moves is = %d\n", index_moves);
+	moves = senpai_moves + index_moves + 1;
+	// printf("Moves = %d\n", moves);
 	return (moves);
 }
 
@@ -222,7 +216,7 @@ static t_node	*find_cheapest_node(t_stack *a, t_stack *b)
 	while (size - 1)
 	{
 		comparator->moves = calculate_moves(a, b, comparator->index);
-		if (comparator->moves < best_node->moves && comparator->index >= group)
+		if (comparator->moves < best_node->moves)
 			best_node = comparator;
 		comparator = comparator->next;
 		size--;
@@ -230,42 +224,187 @@ static t_node	*find_cheapest_node(t_stack *a, t_stack *b)
 	return (best_node);
 }
 
+static int	is_new_min_max(t_stack *a, t_stack *b, int current_index)
+{
+	if (current_index < find_min(a) || current_index > find_max(a))
+    {
+		while (b->head->index != current_index)
+		{
+			if (find_pos(b, current_index) <= (b->size + 1) / 2)
+            	rotate(b);	
+        	else
+            	reverse_rotate(b);
+		}
+        put_min_top(a);
+        push(b, a);
+		return (1); 
+	}
+	return (0);
+}
+
+static void	stock_rotation_flags(t_stack *a, t_stack *b, int best_index, int senpai_index)
+{
+	t_node	*b_iterator;
+	t_node	*a_iterator;
+	int		best_pos;
+	int		senpai_pos;
+	
+	b_iterator = b->head;
+	a_iterator = a->head;
+	best_pos = find_pos(b, best_index);
+	senpai_pos = find_pos(a, senpai_index);
+	if (best_pos <= b->size / 2)
+		while (b_iterator->index != best_index)
+		{
+			b->rotate++;	
+			b_iterator = b_iterator->next;
+		}
+	else
+		while (b_iterator->index != best_index)
+		{
+			b->reverse_rotate++;	
+			b_iterator = b_iterator->prev;
+		}
+	if (senpai_pos <= a->size / 2)
+		while (a_iterator->index != senpai_index)
+		{
+			a->rotate++;
+			a_iterator = a_iterator->next;
+		}
+	else
+		while (a_iterator->index != senpai_index)
+		{
+			a->reverse_rotate++;	
+			a_iterator = a_iterator->prev;
+		}
+	printf("b->rotate = %d, b->reverse_rotate = %d\na->rotate = %d, a->reverse_rotate = %d\n",
+	b->rotate, b->reverse_rotate, a->rotate, a->reverse_rotate);
+}
+
 void    optimal_insertion_sort(t_stack *b, t_stack *a)
 {
-    t_node	*b_top_node;
 	t_node	*best_node;
-	t_node	*best_pal;
-    int 	mid;
+	t_node	*senpai;
 
-    if (b->head == NULL)
-		return ;
-    b_top_node = b->head;
-    if (b_top_node->index < find_min(a) || b_top_node->index > find_max(a))
-    {
-        put_min_top(a, 'a');
-        push(b, a, 'a');
-        return ;
-    }
-	mid = a->size / 2;
-	best_node = find_cheapest_node(a, b);
-	printf("Cheapest node is %d\n", best_node->index);
-	while (b->head->index != best_node->index)
+    if (a->head == NULL || b->head == NULL)
 	{
-		if (find_pos(b, best_node->index) <= mid) 
-            rotate(b, 'b');
-        else
-            reverse_rotate(b, 'b');
+		if (a->head == NULL)
+			push(b, a);
+		return ;
 	}
-	best_pal = find_best_pal(a, best_node->index);
-	printf("Best pal is %d\n", best_pal->index);
-    while (a->head->index != best_pal->index)
-    {
-		if (find_pos(a, best_pal->index) <= mid) 
-            rotate(a, 'a');
-        else
-            reverse_rotate(a, 'a');
-    }
-    push(b, a, 'a');
+	best_node = find_cheapest_node(a, b);
+	printf("Cheapest node is %d\n", best_node->value);
+	if (is_new_min_max(a, b, best_node->index) == 1)
+		return ;
+	senpai = find_senpai(a, best_node->index);
+	printf("Best senpai is %d\n", senpai->value);
+	stock_rotation_flags(a, b, best_node->index, senpai->index);
+	if (b->rotate == a->rotate)
+	{
+		a->rr++;
+		b->rr++;
+		while (b->rotate && a->rotate)
+		{
+			rotate_both(a, b);
+			b->rotate--;
+			a->rotate--;
+			// printf("????\n");
+
+		}
+		a->rr = 0;
+		b->rr = 0;
+	}
+	if (b->reverse_rotate == a->reverse_rotate)
+	{
+		a->rrr++;
+		b->rrr++;
+		while (b->reverse_rotate && a->reverse_rotate)
+		{
+			reverse_rotate_both(a, b);
+			b->reverse_rotate--;
+			a->reverse_rotate--;
+		}
+		a->rr = 0;
+		b->rr = 0;
+	}
+	if (b->rotate < a->rotate)
+	{
+		a->rr++;
+		b->rr++;
+		while (b->rotate)
+		{
+			rotate_both(a, b);
+			b->rotate--;
+			a->rotate--;
+			// printf("??????\n");
+
+		}
+		a->rr = 0;
+		b->rr = 0;
+		while (a->rotate)
+		{
+			rotate(a);
+			a->rotate--;
+			// printf("???\n");
+		}
+
+	}
+	if (b->rotate > a->rotate)
+	{
+		a->rr++;
+		b->rr++;
+		while (a->rotate)
+		{
+			rotate_both(a, b);
+			b->rotate--;
+			a->rotate--;
+		}
+		a->rr = 0;
+		b->rr = 0;
+		while (b->rotate)
+		{
+			rotate(b);
+			b->rotate--;
+		}
+	}
+	if (b->reverse_rotate < a->reverse_rotate)
+	{
+		a->rrr++;
+		b->rrr++;
+		while (b->reverse_rotate)
+		{
+			reverse_rotate_both(a, b);
+			b->reverse_rotate--;
+			a->reverse_rotate--;
+		}
+		a->rr = 0;
+		b->rr = 0;
+		while (a->reverse_rotate)
+		{
+			reverse_rotate(a);
+			a->reverse_rotate--;
+		}
+	}
+	if (b->reverse_rotate > a->reverse_rotate)
+	{
+		a->rrr++;
+		b->rrr++;
+		while (a->reverse_rotate)
+		{
+			reverse_rotate_both(a, b);
+			b->reverse_rotate--;
+			a->reverse_rotate--;
+		}
+		a->rr = 0;
+		b->rr = 0;
+		while (b->reverse_rotate)
+		{
+			reverse_rotate(b);
+			b->reverse_rotate--;
+		}
+	}
+	// printf("b->rotate = %d, b->reverse_rotate = %d\na->rotate = %d, a->reverse_rotate = %d\n", b->rotate, b->reverse_rotate, a->rotate, a->reverse_rotate);
+	push(b, a);
 }
 
 void    sort_100_and_less(t_stack *a, t_stack *b)
@@ -274,26 +413,5 @@ void    sort_100_and_less(t_stack *a, t_stack *b)
 	while (b->size)
 		optimal_insertion_sort(b, a);
 	while (a->head->index != 0)
-		put_min_top(a, 'a');
+		put_min_top(a);
 }
-
-// while (a->size != 1)
-// {
-//     if (stack_sorted_at_this_pos(a) == a->size - 1)
-//         break ;
-//     if (a->head->index > a->head->next->index)
-//         swap(a);
-//     if (a->head->index < a->head->next->index)
-//         push(a, b);
-//     }
-//     while (b->size != 1)
-//     {
-//         if (b->head->index < b->head->next->index)
-//             swap(b);
-//         if (b->head->index > b->head->next->index)
-//             push(b, a);
-//     }
-//     push(b, a);
-//     if (stack_sorted_at_this_pos(a) != a->size - 1)
-//         sort_100_and_less(a, b);
-// } TROLOLOLOLO.

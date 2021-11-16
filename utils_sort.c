@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/28 11:30:04 by lrandria          #+#    #+#             */
-/*   Updated: 2021/11/15 00:36:00 by lrandria         ###   ########.fr       */
+/*   Updated: 2021/11/16 19:18:59 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,46 +32,18 @@ int		is_stack_sorted(t_stack *stack)
 	return (OK);
 }
 
-void	put_min_top(t_stack *stack, char name)
+int		find_pos(t_stack *stack, int index)
 {
-	int	size;
-	int	min;
+	t_node	*iterator;
+	int		i;
 
-	size = stack->size;
-	if (!size)
-		return ;
-	min = find_min_pos(stack);
-	if (min == 0)
-		return ;
-	if (min == 1 && size < 4)
-		swap(stack, name);
-	while (find_min_pos(stack) != 0)
+	iterator = stack->head;
+	i = 0;
+	while (iterator->index != index)
 	{
-		if (min + 1 > size / 2)
-			reverse_rotate(stack, name);
-		if (min + 1 <= size / 2)
-			rotate(stack, name);
+		iterator = iterator->next;
+		i++;
 	}
+	return (i);
 }
 
-void	put_max_top(t_stack *stack, char name)
-{
-	int	max;
-	int	size;
-
-	size = stack->size;
-	if (!size)
-		return ;
-	max = find_max_pos(stack);
-	if (max == 0)
-		return ;
-	if (max == 1  && size < 4)
-		swap(stack, name);
-	while (find_max_pos(stack) != 0)
-	{
-		if (max + 1 > stack->size / 2)
-			reverse_rotate(stack, name);
-		if (max + 1 <= stack->size / 2)
-			rotate(stack, name);
-	}
-}

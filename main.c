@@ -16,12 +16,12 @@ void	push_swap(t_stack *a, t_stack *b)
 {
 		if (a->size <= 5)
 			sort_5_and_less(a, b);
-		if (a->size > 5 && a->size <= 500)
+		if (a->size > 5 && a->size <= 100)
 			sort_100_and_less(a, b);
-// 		if a->size <= 500)
-// 			sort_500_and_less(a, b);
-// 		if (a->size > 500)
-// 			printf("Let's radix lol.");
+		// if (a->size <= 500)
+		// 	sort_500_and_less(a, b);
+		// if (a->size > 500)
+		// 	printf("Let's radix lol.");
 }
 
 int	main(int argc, char **argv)

@@ -12,6 +12,28 @@
 
 #include "push_swap.h"
 
+static	void	init_flags(t_stack *a, t_stack *b, size_t size)
+{
+	a->count_op = 0;
+	a->name = 'a';
+	a->size = size;
+	a->swap = 0;
+	a->rotate = 0;
+	a->reverse_rotate = 0;
+	a->ss = 0;
+	a->rr = 0;
+	a->rrr = 0;
+	b->count_op = 0;
+	b->name = 'b';
+	b->size = 0;
+	b->swap = 0;
+	b->rotate = 0;
+	b->reverse_rotate = 0;
+	b->ss = 0;
+	b->rr = 0;
+	b->rrr = 0;
+}
+
 static t_node	*find_next_min_value(t_stack *a)
 {
 	size_t	size;
@@ -78,10 +100,7 @@ int				init_stacks(t_stack *a, t_stack *b, size_t size, char **input)
 {
 	t_node	*node;
 
-	a->size = size;
-	b->size = 0;
-	a->count_op = 0;
-	b->count_op = 0;
+	init_flags(a, b, size);
 	b->head = NULL;
 	a->head = create_node(ft_atoi(input[0]));
 	node = add_bottom_node(a->head, ft_atoi(input[1]));

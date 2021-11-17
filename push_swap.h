@@ -32,6 +32,7 @@ typedef struct s_node
 {
 	int				value;
 	int				index;
+	int				keep;
 	int				moves;
 	struct s_node	*prev;
 	struct s_node	*next;

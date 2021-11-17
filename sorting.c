@@ -93,7 +93,7 @@ static void tame_chaos(t_stack *a, t_stack *b)
  	if (a->size == 100)
 	{
 		while (a->size != 50)
-			push_group(a, b, 0, 69);
+			push_group(a, b, 0, 49);
 		// while (a->size != 80)    
         // 	push_group(a, b, 19);
     	// while (a->size != 60)

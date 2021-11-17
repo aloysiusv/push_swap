@@ -12,16 +12,61 @@
 
 #include "push_swap.h"
 
-void	push_swap(t_stack *a, t_stack *b)
-{
-		if (a->size <= 5)
-			sort_5_and_less(a, b);
-		if (a->size > 5 && a->size <= 100)
-			sort_100_and_less(a, b);
+// void	push_swap(t_stack *a, t_stack *b)
+// {
+// 		if (a->size <= 5)
+// 			sort_5_and_less(a, b);
+// 		if (a->size > 5 && a->size <= 100)
+// 			sort_100_and_less(a, b);
 		// if (a->size <= 500)
 		// 	sort_500_and_less(a, b);
 		// if (a->size > 500)
 		// 	printf("Let's radix lol.");
+// }
+
+static int	find_length_serie(t_stack *a, t_node *start)
+{
+    t_node  *comparator;
+    int size;
+	int	len;
+
+    start = a->head;
+	comparator = start->next;
+	size = a->size;
+	len = 0;
+	while (size)
+	{
+		if (comparator->index > start->index)
+		{
+			start->keep = 1;
+			start = comparator;
+			len++;
+		}
+		comparator = comparator->next;
+		size--;
+	}
+	return (len);
+}
+static void keep_sorted_in_a(t_stack *a)
+{
+    t_node  *start;
+    int size;
+	int	longest;
+	int	other;
+
+    start = a->head;
+	size = a->size;
+	longest = 0;
+	other = 0;
+	while (size)
+	{
+		longest = do_loop(a, start);
+		other = do_loop(a, start->next)
+		if (other > longest)
+			longest = other;
+		size--;
+	}
+
 }
 
 int	main(int argc, char **argv)
@@ -48,7 +93,8 @@ int	main(int argc, char **argv)
 			return (0);
 		}
 		else
-			push_swap(a, b);
+			keep_sorted_in_a(a);
+			// push_swap(a, b);
 		// printf("COUNT = %zu\n", a->count_op + b->count_op);
 		delete_stack(a);
 		delete_stack(b);

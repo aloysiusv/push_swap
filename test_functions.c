@@ -6,31 +6,31 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 19:15:34 by lrandria          #+#    #+#             */
-/*   Updated: 2021/11/16 19:21:55 by lrandria         ###   ########.fr       */
+/*   Updated: 2021/11/17 20:41:46 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static int choose_r_rr_groups(t_node **first, t_node **last, int group)
+static int choose_r_rr_groups(t_node **first, t_node **last, int idx_min, int idx_max)
 {
     int pos_first;
     int pos_last;
     int i;
 
     i = 0;
-    while (i < group)
+    while (i < idx_max)
     {
-        if ((*first)->index >= 0 && (*first)->index < group)
+        if ((*first)->index >= idx_min && (*first)->index < idx_max)
             break ;
         *first = (*first)->next;
         i++;
     }
     pos_first = i;
     i = 0;
-    while (i < group)
+    while (i < idx_max)
     {
-        if ((*last)->index >= 0 && (*last)->index < group)
+        if ((*last)->index >= idx_min && (*last)->index < idx_max)
             break ;
         *last = (*last)->prev;
         i++;
@@ -41,7 +41,7 @@ static int choose_r_rr_groups(t_node **first, t_node **last, int group)
     return (1);
 }
 
-static void	push_first_group(t_stack *a, t_stack *b, int group)
+static void	push_group(t_stack *a, t_stack *b, int idx_min, int idx_max)
 {
     t_node  *first;
     t_node  *last;
@@ -51,7 +51,7 @@ static void	push_first_group(t_stack *a, t_stack *b, int group)
         return ;
     first = a->head;
     last = a->head->prev;
-    best = choose_r_rr_groups(&first, &last, group);
+    best = choose_r_rr_groups(&first, &last, idx_min, idx_max);
     if (best == 0)
         while (a->head->index != first->index)
             rotate(a);
@@ -72,13 +72,13 @@ static void tame_chaos(t_stack *a, t_stack *b)
 		{
 			mid += 1;
 			while (a->size != mid)    
-        		push_first_group(a, b, mid - 1);
+        		push_group(a, b, 0, mid - 1);
     		while (a->size)
 				push(a, b);
 			return ;
 		}
 		while (a->size != mid)    
-        	push_first_group(a, b, mid);
+        	push_group(a, b, 0, mid);
     	while (a->size)
 			push(a, b);
 		// sort_3(a);
@@ -92,16 +92,18 @@ static void tame_chaos(t_stack *a, t_stack *b)
 	}
  	if (a->size == 100)
 	{
-		while (a->size != 80)    
-        	push_first_group(a, b, 19);
-    	while (a->size != 60)
-        	push_first_group(a, b, 39);
-    	while (a->size != 40)
-        	push_first_group(a, b, 59);
-    	while (a->size != 20)
-        	push_first_group(a, b, 79);
+		while (a->size != 50)
+			push_group(a, b, 0, 69);
+		// while (a->size != 80)    
+        // 	push_group(a, b, 19);
+    	// while (a->size != 60)
+        // 	push_group(a, b, 39);
+    	// while (a->size != 40)
+        // 	push_group(a, b, 59);
+    	// while (a->size != 20)
+        // 	push_group(a, b, 79);
    		while (a->size)
-			push_first_group(a, b, 99);
+			push(a, b);
 		// while (b->size)
 		// {
 		// 	put_max_top(b);
@@ -111,30 +113,32 @@ static void tame_chaos(t_stack *a, t_stack *b)
 	}
 	if (a->size == 500)
 	{
-		while (a->size != 455)    
-        	push_first_group(a, b, 44);
-    	while (a->size != 410)
-        	push_first_group(a, b, 89);
-    	while (a->size != 365)
-        	push_first_group(a, b, 134);
-    	while (a->size != 320)
-        	push_first_group(a, b, 179);
-		while (a->size != 275)
-        	push_first_group(a, b, 224);
-		while (a->size != 230)
-        	push_first_group(a, b, 269);
-		while (a->size != 185)
-        	push_first_group(a, b, 314);
-		while (a->size != 140)
-        	push_first_group(a, b, 359);
-		while (a->size != 95)
-        	push_first_group(a, b, 404);
-		while (a->size != 50)
-        	push_first_group(a, b, 449);
+		// while (a->size != 455)    
+        // 	push_group(a, b, 0, 44);
+    	// while (a->size != 410)
+        // 	push_group(a, b, 45, 89);
+    	// while (a->size != 365)
+        // 	push_group(a, b, 90, 134);
+    	// while (a->size != 320)
+        // 	push_group(a, b, 135, 179);
+		// while (a->size != 275)
+        // 	push_group(a, b, 180, 224);
+		// while (a->size != 230)
+        // 	push_group(a, b, 225, 269);
+		// while (a->size != 185)
+        // 	push_group(a, b, 270, 314);
+		// while (a->size != 140)
+        // 	push_group(a, b, 315, 359);
+		// while (a->size != 95)
+        // 	push_group(a, b, 360, 404);
+		// while (a->size != 50)
+        // 	push_group(a, b, 405, 449);
+		while (a->size != 334)
+        	push_group(a, b, 0, 200);
+		while (a->size != 166)
+        	push_group(a, b, 0, 400);
    		while (a->size)
-    	{
-			push_first_group(a, b, 499);
-		}
+			push(a, b);
 		// while (b->size)
 		// {
 		// 	put_max_top(b);
@@ -254,31 +258,170 @@ static void	stock_rotation_flags(t_stack *a, t_stack *b, int best_index, int sen
 	best_pos = find_pos(b, best_index);
 	senpai_pos = find_pos(a, senpai_index);
 	if (best_pos <= b->size / 2)
+	{
 		while (b_iterator->index != best_index)
 		{
 			b->rotate++;	
 			b_iterator = b_iterator->next;
 		}
+		// printf("b->rotate = %d\n", b->rotate);
+	}
 	else
+	{
 		while (b_iterator->index != best_index)
 		{
 			b->reverse_rotate++;	
 			b_iterator = b_iterator->prev;
 		}
+		// printf("b->reverse_rotate = %d\n", b->reverse_rotate);
+	}
 	if (senpai_pos <= a->size / 2)
+	{
 		while (a_iterator->index != senpai_index)
 		{
 			a->rotate++;
 			a_iterator = a_iterator->next;
 		}
+		// printf("a->rotate = %d\n", a->rotate);
+	}
 	else
+	{
 		while (a_iterator->index != senpai_index)
 		{
 			a->reverse_rotate++;	
 			a_iterator = a_iterator->prev;
 		}
-	printf("b->rotate = %d, b->reverse_rotate = %d\na->rotate = %d, a->reverse_rotate = %d\n",
-	b->rotate, b->reverse_rotate, a->rotate, a->reverse_rotate);
+		// printf("a->reverse_rotate = %d\n", a->reverse_rotate);
+	}
+}
+
+static void	apply_rot_equal(t_stack *a, t_stack *b)
+{
+	if (b->rotate == a->rotate)
+	{
+		a->rr++;
+		b->rr++;
+		while (b->rotate && a->rotate)
+		{
+			rotate_both(a, b);
+			b->rotate--;
+			a->rotate--;
+		}
+		a->rr = 0;
+		b->rr = 0;
+        // printf("Rot equal\n");
+	}
+	if (b->reverse_rotate == a->reverse_rotate)
+	{
+		a->rrr++;
+		b->rrr++;
+		while (b->reverse_rotate && a->reverse_rotate)
+		{
+			reverse_rotate_both(a, b);
+			b->reverse_rotate--;
+			a->reverse_rotate--;
+		}
+		a->rrr = 0;
+		b->rrr = 0;
+        // printf("Rev rot equal\n");
+
+	}
+}
+
+static void	apply_rot_inferior(t_stack *a, t_stack *b)
+{
+	if (b->rotate < a->rotate)
+	{
+		a->rr++;
+		b->rr++;
+		while (b->rotate)
+		{
+			rotate_both(a, b);
+			b->rotate--;
+			a->rotate--;
+		}
+		a->rr = 0;
+		b->rr = 0;
+        // printf("Rot b inferior\n");
+		while (a->rotate)
+		{
+			rotate(a);
+			a->rotate--;
+		}
+        // printf("Do rest rot a\n");
+	}
+}
+
+static void	apply_rot_superior(t_stack *a, t_stack *b)
+{
+	if (b->rotate > a->rotate)
+	{
+		a->rr++;
+		b->rr++;
+		while (a->rotate)
+		{
+			rotate_both(a, b);
+			b->rotate--;
+			a->rotate--;
+		}
+		a->rr = 0;
+		b->rr = 0;
+        // printf("Rot b superior\n");
+		while (b->rotate)
+		{
+			rotate(b);
+			b->rotate--;
+		}
+        // printf("Do rest rot b\n");
+	}
+}
+
+static void	apply_rev_rot_inferior(t_stack *a, t_stack *b)
+{
+	if (b->reverse_rotate < a->reverse_rotate)
+	{
+		a->rrr++;
+		b->rrr++;
+		while (b->reverse_rotate)
+		{
+			reverse_rotate_both(a, b);
+			b->reverse_rotate--;
+			a->reverse_rotate--;
+		}
+		a->rrr = 0;
+		b->rrr = 0;
+        // printf("Rev rot b inferior\n");
+		while (a->reverse_rotate)
+		{
+			reverse_rotate(a);
+			a->reverse_rotate--;
+		}
+        // printf("Do rest rev rot a\n");
+	}
+}
+
+static void	apply_rev_rot_superior(t_stack *a, t_stack *b)
+{
+	if (b->reverse_rotate > a->reverse_rotate)
+	{
+		a->rrr++;
+		b->rrr++;
+		while (a->reverse_rotate)
+		{
+			reverse_rotate_both(a, b);
+			b->reverse_rotate--;
+			a->reverse_rotate--;
+		}
+		a->rrr = 0;
+		b->rrr = 0;
+        // printf("Rev rot b superior\n");
+		while (b->reverse_rotate)
+		{
+			reverse_rotate(b);
+			b->reverse_rotate--;
+		}
+        // printf("Do rest rev rot b\n");
+	}
 }
 
 void    optimal_insertion_sort(t_stack *b, t_stack *a)
@@ -293,117 +436,17 @@ void    optimal_insertion_sort(t_stack *b, t_stack *a)
 		return ;
 	}
 	best_node = find_cheapest_node(a, b);
-	printf("Cheapest node is %d\n", best_node->value);
+	// printf("Cheapest node is %d\n", best_node->value);
 	if (is_new_min_max(a, b, best_node->index) == 1)
 		return ;
 	senpai = find_senpai(a, best_node->index);
-	printf("Best senpai is %d\n", senpai->value);
+	// printf("Best senpai is %d\n", senpai->value);
 	stock_rotation_flags(a, b, best_node->index, senpai->index);
-	if (b->rotate == a->rotate)
-	{
-		a->rr++;
-		b->rr++;
-		while (b->rotate && a->rotate)
-		{
-			rotate_both(a, b);
-			b->rotate--;
-			a->rotate--;
-			// printf("????\n");
-
-		}
-		a->rr = 0;
-		b->rr = 0;
-	}
-	if (b->reverse_rotate == a->reverse_rotate)
-	{
-		a->rrr++;
-		b->rrr++;
-		while (b->reverse_rotate && a->reverse_rotate)
-		{
-			reverse_rotate_both(a, b);
-			b->reverse_rotate--;
-			a->reverse_rotate--;
-		}
-		a->rr = 0;
-		b->rr = 0;
-	}
-	if (b->rotate < a->rotate)
-	{
-		a->rr++;
-		b->rr++;
-		while (b->rotate)
-		{
-			rotate_both(a, b);
-			b->rotate--;
-			a->rotate--;
-			// printf("??????\n");
-
-		}
-		a->rr = 0;
-		b->rr = 0;
-		while (a->rotate)
-		{
-			rotate(a);
-			a->rotate--;
-			// printf("???\n");
-		}
-
-	}
-	if (b->rotate > a->rotate)
-	{
-		a->rr++;
-		b->rr++;
-		while (a->rotate)
-		{
-			rotate_both(a, b);
-			b->rotate--;
-			a->rotate--;
-		}
-		a->rr = 0;
-		b->rr = 0;
-		while (b->rotate)
-		{
-			rotate(b);
-			b->rotate--;
-		}
-	}
-	if (b->reverse_rotate < a->reverse_rotate)
-	{
-		a->rrr++;
-		b->rrr++;
-		while (b->reverse_rotate)
-		{
-			reverse_rotate_both(a, b);
-			b->reverse_rotate--;
-			a->reverse_rotate--;
-		}
-		a->rr = 0;
-		b->rr = 0;
-		while (a->reverse_rotate)
-		{
-			reverse_rotate(a);
-			a->reverse_rotate--;
-		}
-	}
-	if (b->reverse_rotate > a->reverse_rotate)
-	{
-		a->rrr++;
-		b->rrr++;
-		while (a->reverse_rotate)
-		{
-			reverse_rotate_both(a, b);
-			b->reverse_rotate--;
-			a->reverse_rotate--;
-		}
-		a->rr = 0;
-		b->rr = 0;
-		while (b->reverse_rotate)
-		{
-			reverse_rotate(b);
-			b->reverse_rotate--;
-		}
-	}
-	// printf("b->rotate = %d, b->reverse_rotate = %d\na->rotate = %d, a->reverse_rotate = %d\n", b->rotate, b->reverse_rotate, a->rotate, a->reverse_rotate);
+	apply_rot_equal(a, b);
+	apply_rot_inferior(a, b);
+	apply_rot_superior(a, b);
+	apply_rev_rot_inferior(a, b);
+	apply_rev_rot_superior(a, b);
 	push(b, a);
 }
 
@@ -414,4 +457,8 @@ void    sort_100_and_less(t_stack *a, t_stack *b)
 		optimal_insertion_sort(b, a);
 	while (a->head->index != 0)
 		put_min_top(a);
+	// if (is_stack_sorted(a) == OK)
+		// write(1, "OK\n", 3);
+	// else
+		// write(1, "KO\n", 3);
 }

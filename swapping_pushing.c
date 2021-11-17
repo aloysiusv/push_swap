@@ -14,15 +14,17 @@
 
 void	swap(t_stack *stack)
 {
-	t_node	*tmp;
+	int	tmp_value;
+	int	tmp_index;
 
-	tmp = stack->head;
+	tmp_value = stack->head->value;
+	tmp_index = stack->head->index;
 	if (stack->size >= 2)
 	{
 		stack->head->value = stack->head->next->value;
-		stack->head->next->value = tmp->value;
+		stack->head->next->value = tmp_value;
 		stack->head->index = stack->head->next->index;
-		stack->head->next->index = tmp->index;
+		stack->head->next->index = tmp_index;
 		if (stack->name == 'a' && stack->ss <= 0)
 			write(1, "sa\n", 3);
 		if (stack->name == 'b' && stack->ss <= 0)
@@ -91,7 +93,7 @@ void	push(t_stack *pushing, t_stack *receiving)
 			write(1, "pa\n", 3);
 		if (receiving->name == 'b')
 			write(1, "pb\n", 3);
-		printf("Node [%d] has been pushed.\n", receiving->head->value);
+		// printf("Node [%d] has been pushed.\n", receiving->head->value);
 		pushing->count_op++;
 	}
 }

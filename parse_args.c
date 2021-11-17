@@ -43,14 +43,14 @@ t_bool	stock_and_seek_duplicates(size_t nb_of_elements, char **argv)
 		tab[i] = ft_atol(argv[i]);
 		if (tab[i] < INT_MIN || tab[i] > INT_MAX)
 		{
-			printf("Not an int.\n");
+			// printf("Not an int.\n");
 			return (NOT_OK);
 		}
 		i++;
 	}
 	if (is_duplicates(tab, nb_of_elements) == NOT_OK)
 	{
-		printf("Duplicates.\n");
+		// printf("Duplicates.\n");
 		return (NOT_OK);
 	}
 	return (OK);
@@ -89,7 +89,7 @@ t_bool	is_input_valid(size_t nb_of_elements, char **input)
 	
 	if (nb_of_elements < 2)
 	{
-		printf("Not enough args.");
+		// printf("Not enough args.");
 		return (NOT_OK);
 	}
 	i = 0;
@@ -97,18 +97,18 @@ t_bool	is_input_valid(size_t nb_of_elements, char **input)
 	{
 		if (is_str_only_digits(input[i]) == NOT_OK)
 		{
-			printf("Non-digits.\n");
+			// printf("Non-digits.\n");
 			return (NOT_OK);
 		}
 		if (is_str_int_sized(input[i]) == NOT_OK)
 		{
-			printf("Bigger than int size\n");
+			// printf("Bigger than int size\n");
 			return (NOT_OK);
 		}
 		i++;
 	}
 	if (stock_and_seek_duplicates(nb_of_elements, input) == NOT_OK)
 		return(NOT_OK);
-	printf("It's valid.\n");
+	// printf("It's valid.\n");
 	return (OK);
 }

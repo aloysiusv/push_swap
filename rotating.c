@@ -22,9 +22,9 @@ void	rotate(t_stack *stack)
 	stack->head = stack->head->next;
 	stack->head->prev = tmp;
 	if (stack->name == 'a' && stack->rr <= 0)
-		write(1, "ra\n", 4);
+		write(1, "ra\n", 3);
 	if (stack->name == 'b' && stack->rr <= 0)
-		write(1, "rb\n", 4);
+		write(1, "rb\n", 3);
 	stack->count_op++;
 }
 

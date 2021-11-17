@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 15:25:52 by lrandria          #+#    #+#             */
-/*   Updated: 2021/11/16 14:53:42 by lrandria         ###   ########.fr       */
+/*   Updated: 2021/11/17 17:06:34 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ void	put_min_top(t_stack *stack)
 		return ;
 	min = find_min(stack);
 	min_pos = find_pos(stack, min);
-	// printf("Min_pos = %d\n", min_pos);
 	if (min_pos == 0)
 		return ;
 	while (stack->head->index != min)

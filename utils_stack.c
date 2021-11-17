@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-static	void	init_flags(t_stack *a, t_stack *b, size_t size)
+static	void	init_infos(t_stack *a, t_stack *b, size_t size)
 {
 	a->count_op = 0;
 	a->name = 'a';
@@ -100,7 +100,7 @@ int				init_stacks(t_stack *a, t_stack *b, size_t size, char **input)
 {
 	t_node	*node;
 
-	init_flags(a, b, size);
+	init_infos(a, b, size);
 	b->head = NULL;
 	a->head = create_node(ft_atoi(input[0]));
 	node = add_bottom_node(a->head, ft_atoi(input[1]));
@@ -124,11 +124,11 @@ void			delete_stack(t_stack *stack)
 	{
 		tmp = stack->head;
 	  	stack->head = stack->head->next;
-	  	printf("Node [%d] is next to be deleted.\n", tmp->value);
+	  	// printf("Node [%d] is next to be deleted.\n", tmp->value);
 	  	delete_node(tmp);
 		stack->size--;
 	}
 	if (stack != NULL)
 		free(stack);
-	printf("Stack has been deleted.\n");
+	// printf("Stack has been deleted.\n");
 }

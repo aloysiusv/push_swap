@@ -42,14 +42,14 @@ int	main(int argc, char **argv)
 		init_stacks(a, b, argc - 1, argv + 1);
 		if (is_stack_sorted(a) == OK)
 		{
-			write(1, "Stack is already sorted.\n", 25);
+			// write(1, "Stack is already sorted.\n", 25);
 			delete_stack(a);
 			delete_stack(b);
 			return (0);
 		}
 		else
 			push_swap(a, b);
-		printf("COUNT = %zu\n", a->count_op + b->count_op);
+		// printf("COUNT = %zu\n", a->count_op + b->count_op);
 		delete_stack(a);
 		delete_stack(b);
 	}

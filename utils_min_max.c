@@ -6,26 +6,26 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 15:25:52 by lrandria          #+#    #+#             */
-/*   Updated: 2021/11/17 17:06:34 by lrandria         ###   ########.fr       */
+/*   Updated: 2021/11/18 20:40:59 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-int     find_min(t_stack *stack)
+t_node	*find_min(t_stack *stack)
 {
 	t_node	*min;
 	t_node	*comparator;
     int      size;
 
 	if (stack->head == NULL)
-		return (-1);
+		return (NULL);
 	size = stack->size;
+	min = stack->head;
     if (size == 1)
-		return (stack->head->index);
+		return (min);
 	else
 	{
-		min = stack->head;
 		comparator = stack->head->next;
 		while (size)
 		{
@@ -35,10 +35,10 @@ int     find_min(t_stack *stack)
 			size--;
 		}
 	}
-	return (min->index);
+	return (min);
 }
 
-int     find_max(t_stack *stack)
+t_node	*find_max(t_stack *stack)
 {
 	t_node	*max;
 	t_node	*comparator;
@@ -46,12 +46,12 @@ int     find_max(t_stack *stack)
 
 	size = stack->size;
     if (stack->head == NULL)
-        return (-1);
-	else if (size == 1)
-		return (stack->head->index);
+        return (NULL);
+	max = stack->head;
+	if (size == 1)
+		return (max);
 	else
 	{
-		max = stack->head;
 		comparator = stack->head->next;
 		while (size)
 		{
@@ -61,23 +61,23 @@ int     find_max(t_stack *stack)
 			size--;
 		}
 	}
-	return (max->index);
+	return (max);
 }
 
 void	put_min_top(t_stack *stack)
 {
-	int	size;
-	int	min_pos;
-	int	min;
+	int		size;
+	int		min_pos;
+	t_node	*min;
 
 	size = stack->size;
 	if (!size)
 		return ;
 	min = find_min(stack);
-	min_pos = find_pos(stack, min);
+	min_pos = find_pos(stack, min->index);
 	if (min_pos == 0)
 		return ;
-	while (stack->head->index != min)
+	while (stack->head->index != min->index)
 	{
 		if (min_pos <= size / 2) // min_pos + 1;
 			rotate(stack);
@@ -88,20 +88,22 @@ void	put_min_top(t_stack *stack)
 
 void	put_max_top(t_stack *stack)
 {
-	int	max;
-	int	size;
+	int		size;
+	int		max_pos;
+	t_node	*max;
 
 	size = stack->size;
 	if (!size)
 		return ;
-	max = find_pos(stack, find_max(stack));
-	if (max == 0)
+	max = find_max(stack);
+	max_pos = find_pos(stack, max->index);
+	if (max_pos == 0)
 		return ;
-	while (stack->head->index != 0)
+	while (stack->head->index != max->index)
 	{
-		if (max + 1 >= size / 2)
-			reverse_rotate(stack);
-		if (max + 1 < size / 2)
+		if (max_pos <= size / 2) // max_pos + 1;
 			rotate(stack);
+		if (max_pos > size / 2) // max_pos + 1;
+			reverse_rotate(stack);
 	}
 }

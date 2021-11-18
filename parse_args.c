@@ -87,11 +87,11 @@ t_bool	is_input_valid(size_t nb_of_elements, char **input)
 {
 	size_t	i;
 	
-	if (nb_of_elements < 2)
-	{
-		// printf("Not enough args.");
-		return (NOT_OK);
-	}
+	// if (nb_of_elements < 2)
+	// {
+	// 	// printf("Not enough args.");
+	// 	return (NOT_OK);
+	// }
 	i = 0;
 	while (input[i])
 	{

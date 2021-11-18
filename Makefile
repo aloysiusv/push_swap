@@ -12,7 +12,7 @@
 
 NAME		=	push_swap
 CC			=	gcc
-CFLAGS		=	-Wall -Wextra -Werror
+CFLAGS		=	-Wall -Wextra
 OBJS		=	$(SRCS:.c=.o)
 HDR			=	push_swap.h
 SRCS		=	main.c parse_args.c \

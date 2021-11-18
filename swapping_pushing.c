@@ -84,7 +84,7 @@ void	push(t_stack *pushing, t_stack *receiving)
 	t_node	*node;
 
 	node = pop(pushing);
-	if (node != NULL)
+	if (node != NULL && node->keep != 1)
 	{
 		add_top_node(receiving, node);
 		pushing->size--;

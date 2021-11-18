@@ -124,11 +124,11 @@ void			delete_stack(t_stack *stack)
 	{
 		tmp = stack->head;
 	  	stack->head = stack->head->next;
-	  	// printf("Node [%d] is next to be deleted.\n", tmp->value);
+	  	printf("Node [%d] is next to be deleted.\n", tmp->value);
 	  	delete_node(tmp);
 		stack->size--;
 	}
 	if (stack != NULL)
 		free(stack);
-	// printf("Stack has been deleted.\n");
+	printf("Stack has been deleted.\n");
 }

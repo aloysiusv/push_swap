@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 15:42:54 by lrandria          #+#    #+#             */
-/*   Updated: 2021/11/17 16:52:43 by lrandria         ###   ########.fr       */
+/*   Updated: 2021/11/18 18:57:20 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,15 @@ void    sort_2(t_stack *stack)
 
 void	sort_3(t_stack *stack)
 {
-    size_t min_pos;
-    size_t max_pos;
+    t_node *min;
+    t_node *max;
+    int     min_pos;
+    int     max_pos;
 
-    min_pos = find_pos(stack, find_min(stack));
-    max_pos = find_pos(stack, find_max(stack));
+    min = find_min(stack);
+    max = find_max(stack);
+    min_pos = find_pos(stack, min->index);
+    max_pos = find_pos(stack, max->index);
     if (min_pos == 0 && max_pos == 1)
     {
         swap(stack);

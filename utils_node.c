@@ -21,8 +21,8 @@ t_node	*create_node(int num)
 		return (0);
 	node->value = num;
 	node->index = -1;
-	node->moves = -1;
-	node->keep = -1;
+	node->moves = 0;
+	node->keep = 0;
 	node->prev = node;
 	node->next = node;
 	return (node);

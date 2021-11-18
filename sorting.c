@@ -210,13 +210,11 @@ static t_node	*find_cheapest_node(t_stack *a, t_stack *b)
 	t_node	*best_node;
 	t_node	*comparator;
 	int		size;
-	int		group;
 
 	best_node = b->head;
 	comparator = b->head->next;
 	best_node->moves = calculate_moves(a, b, best_node->index);
 	size = b->size;
-	group = size;
 	while (size - 1)
 	{
 		comparator->moves = calculate_moves(a, b, comparator->index);
@@ -230,7 +228,12 @@ static t_node	*find_cheapest_node(t_stack *a, t_stack *b)
 
 static int	is_new_min_max(t_stack *a, t_stack *b, int current_index)
 {
-	if (current_index < find_min(a) || current_index > find_max(a))
+	t_node	*min;
+	t_node	*max;
+	
+	min = find_min(a);
+	max = find_max(a);
+	if (current_index < min->index || current_index > max->index)
     {
 		while (b->head->index != current_index)
 		{
@@ -450,9 +453,88 @@ void    optimal_insertion_sort(t_stack *b, t_stack *a)
 	push(b, a);
 }
 
+// static	t_serie	*gather_serie_info(t_stack *a, t_node *start)
+// {
+// 	t_serie	*serie;
+// 	int		size;
+
+// 	serie->min = start;
+// 	serie->max = a->head->next;
+// 	serie->count = 0;
+// 	size = a->size;
+// 	while (size)
+// 	{
+// 		if (serie->max->index > start->index)
+// 		{
+// 			start = serie->max;
+// 			serie->count++;
+// 			if (serie->max->index == a->size - 1)
+// 				break ;
+// 		}
+// 		serie->max = serie->max->next;
+// 		size--;
+// 	}
+// 	return (serie);
+// }
+
+// static t_serie	*assign_keep_flags(t_stack *a)
+// {
+// 	t_node	*start;
+// 	t_serie	*best_serie;
+// 	t_serie	*comparator;
+// 	int		size;
+
+// 	start = a->head;
+// 	size = a->size;
+// 	best_serie = gather_serie_info(a, start);
+// 	while (--size)
+// 	{
+// 		comparator = gather_serie_info(a, start->next);
+// 		if (comparator->count > best_serie->count)
+// 			best_serie = comparator;
+// 		start = start->next;
+// 	}
+// 	start = best_serie->min;
+// 	while (best_serie->count)
+// 	{
+// 		start->keep = 1;
+// 		start = start->next;
+// 		best_serie->count--;
+// 	}
+// 	return (best_serie);
+// }
+
+static void	keep_in_A_push_in_B(t_stack *a, t_stack *b)
+{
+	t_node	*max;
+
+	max = find_max(a);
+	while (a->head != a->head->prev)
+	{
+		if (a->head->index > a->head->prev->index)
+			rotate(a);
+		else
+			tame_chaos(a, b);
+			// push(a, b);
+	}
+	// t_serie	*best;
+	
+	// best = assign_keep_flags(a);
+	// int	
+	// while (a->size != best->count)
+	// {
+	// 	if (a->head->keep == 1)
+	// 		rotate(a);
+	// 	else
+	// 		push(a, b);
+}
+
 void    sort_100_and_less(t_stack *a, t_stack *b)
 {
-	tame_chaos(a, b);
+	keep_in_A_push_in_B(a, b);
+	// tame_chaos(a, b);
+	// while (a->size)
+		// push(a, b);
 	while (b->size)
 		optimal_insertion_sort(b, a);
 	while (a->head->index != 0)

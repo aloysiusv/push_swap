@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 19:15:34 by lrandria          #+#    #+#             */
-/*   Updated: 2021/11/17 20:41:46 by lrandria         ###   ########.fr       */
+/*   Updated: 2021/11/18 18:43:27 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,7 +230,12 @@ static t_node	*find_cheapest_node(t_stack *a, t_stack *b)
 
 static int	is_new_min_max(t_stack *a, t_stack *b, int current_index)
 {
-	if (current_index < find_min(a) || current_index > find_max(a))
+	t_node	*min;
+	t_node	*max;
+	
+	min = find_min(a);
+	max = find_max(a);
+	if (current_index < min->index || current_index > max->index)
     {
 		while (b->head->index != current_index)
 		{

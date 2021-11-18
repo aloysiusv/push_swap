@@ -52,6 +52,13 @@ typedef struct s_stack
 	int		rrr;
 }				t_stack;
 
+typedef struct s_serie
+{
+	int		count;
+	t_node	*min;
+	t_node	*max;
+}				t_serie;
+
 size_t	ft_strlen(const char *s);
 int 	ft_is_digit(int c);
 int		ft_atoi(const char *num_ascii);
@@ -75,8 +82,8 @@ void	sort_100_and_less(t_stack *a, t_stack *b);
 void	sort_500_and_less(t_stack *a, t_stack *b);
 
 int		find_pos(t_stack *stack, int index);
-int     find_min(t_stack *stack);
-int     find_max(t_stack *stack);
+t_node	*find_min(t_stack *stack);
+t_node	*find_max(t_stack *stack);
 void	put_min_top(t_stack *stack);
 void	put_max_top(t_stack *stack);
 

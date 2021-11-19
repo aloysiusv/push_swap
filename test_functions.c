@@ -462,7 +462,7 @@ void    sort_100_and_less(t_stack *a, t_stack *b)
 		optimal_insertion_sort(b, a);
 	while (a->head->index != 0)
 		put_min_top(a);
-	// if (is_stack_sorted(a) == OK)
+	// if (stack_sorted_at_this_pos(a) == OK)
 		// write(1, "OK\n", 3);
 	// else
 		// write(1, "KO\n", 3);

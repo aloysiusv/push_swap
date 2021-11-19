@@ -12,38 +12,62 @@
 
 #include "push_swap.h"
 
-int		is_stack_sorted(t_stack *stack)
+int		stack_sorted_at_this_pos(t_stack *stack)
 {
+	int		pos;
 	int		size;
 	t_node	*iterator;
 	t_node	*comparator;
 
+	pos = 0;
 	size = stack->size;
 	iterator = stack->head;
 	comparator = stack->head->next;
-	while (size)
+	while (--size)
 	{
 		if (iterator->index > comparator->index)
-			return (NOT_OK);
+			return (pos);
+		pos++;
 		iterator = iterator->next;
 		comparator = comparator->next;
-		size--;
 	}
-	return (OK);
+	return (pos);
+}
+
+int		stack_rev_sorted_at_this_pos(t_stack *stack)
+{
+	int		pos;
+	int		size;
+	t_node	*iterator;
+	t_node	*comparator;
+
+	pos = 0;
+	size = stack->size;
+	iterator = stack->head;
+	comparator = stack->head->next;
+	while (--size)
+	{
+		if (iterator->index < comparator->index)
+			return (pos);
+		pos++;
+		iterator = iterator->next;
+		comparator = comparator->next;
+	}
+	return (pos);
 }
 
 int		find_pos(t_stack *stack, int index)
 {
 	t_node	*iterator;
-	int		i;
+	int		pos;
 
 	iterator = stack->head;
-	i = 0;
+	pos = 0;
 	while (iterator->index != index)
 	{
 		iterator = iterator->next;
-		i++;
+		pos++;
 	}
-	return (i);
+	return (pos);
 }
 

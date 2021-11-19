@@ -18,8 +18,8 @@ void	push_swap(t_stack *a, t_stack *b)
 			sort_5_and_less(a, b);
 		if (a->size > 5 && a->size <= 100)
 			sort_100_and_less(a, b);
-		// if (a->size <= 500)
-		// 	sort_500_and_less(a, b);
+		if (a->size <= 500)
+			sort_500_and_less(a, b);
 		// if (a->size > 500)
 		// 	printf("Let's radix lol.");
 }
@@ -43,7 +43,7 @@ int	main(int argc, char **argv)
 			return (0);
 		}
 		init_stacks(a, b, argc - 1, argv + 1);
-		if (is_stack_sorted(a) == OK)
+		if (stack_sorted_at_this_pos(a) == argc - 1)
 		{
 			delete_stack(a);
 			delete_stack(b);
@@ -51,6 +51,7 @@ int	main(int argc, char **argv)
 		}
 		else
 			push_swap(a, b);
+		printf("COUNT = %zu\n", a->count_op + b->count_op);
 		delete_stack(a);
 		delete_stack(b);
 	}

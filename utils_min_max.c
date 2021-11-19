@@ -46,7 +46,7 @@ t_node	*find_max(t_stack *stack)
 
 	size = stack->size;
     if (stack->head == NULL)
-        return (NULL);
+		return (NULL);
 	max = stack->head;
 	if (size == 1)
 		return (max);

@@ -93,6 +93,7 @@ void	delete_node(t_node *node);
 
 int		init_stacks(t_stack *a, t_stack *b, size_t size, char **input);
 void	delete_stack(t_stack *stack);
-int		is_stack_sorted(t_stack *stack);
+int		stack_sorted_at_this_pos(t_stack *stack);
+int		stack_rev_sorted_at_this_pos(t_stack *stack);
 
 #endif

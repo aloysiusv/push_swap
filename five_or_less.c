@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 15:42:54 by lrandria          #+#    #+#             */
-/*   Updated: 2021/11/18 18:57:20 by lrandria         ###   ########.fr       */
+/*   Updated: 2021/11/19 20:58:39 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,26 +25,25 @@ void	sort_3(t_stack *stack)
     int     min_pos;
     int     max_pos;
 
+    printf("Entering Sort_3\n");
     min = find_min(stack);
     max = find_max(stack);
     min_pos = find_pos(stack, min->index);
     max_pos = find_pos(stack, max->index);
+    
     if (min_pos == 0 && max_pos == 1)
-    {
         swap(stack);
         rotate(stack);
-    }
     if (min_pos == 1 && max_pos == 0)
         rotate(stack);
     if (min_pos == 1 && max_pos == 2)
         swap(stack);
     if (min_pos == 2 && max_pos == 0)
-    {
         swap(stack);
         reverse_rotate(stack);
-    }
     if (min_pos == 2 && max_pos == 1)
 		reverse_rotate(stack);
+    printf("Yolo\n");
  }
 
 static void sort_4(t_stack *a, t_stack *b)
@@ -57,6 +56,7 @@ static void sort_4(t_stack *a, t_stack *b)
 
 void	sort_5_and_less(t_stack *a, t_stack *b)
 {
+    printf("Entering sort_5_and_less\n");
     if (a->size == 2)
         sort_2(a);
     if (a->size == 3)

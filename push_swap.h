@@ -19,14 +19,8 @@
 
 # define INT_MIN -2147483648
 # define INT_MAX 2147483647
-# define MIN 0
-# define MAX 1
-
-typedef enum e_bool
-{
-	NOT_OK,
-	OK
-}			t_bool;
+# define OK		0
+# define NOT_OK -1
 
 typedef struct s_node
 {
@@ -64,7 +58,7 @@ int 	ft_is_digit(int c);
 int		ft_atoi(const char *num_ascii);
 long	ft_atol(const char *num_ascii);
 
-t_bool	is_input_valid(size_t nb_of_elements, char **input);
+int		is_input_valid(size_t nb_of_elements, char **input);
 void	push_swap(t_stack *a, t_stack *b);
 
 void	swap(t_stack *stack);

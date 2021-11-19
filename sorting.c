@@ -58,7 +58,7 @@ static void	push_group(t_stack *a, t_stack *b, int idx_min, int idx_max)
     else
         while (a->head->index != last->index)
             reverse_rotate(a);
-    push(a, b);
+	push(a, b);
 }
 
 static void tame_chaos(t_stack *a, t_stack *b)
@@ -453,20 +453,20 @@ void    optimal_insertion_sort(t_stack *b, t_stack *a)
 	push(b, a);
 }
 
-// static	t_serie	*gather_serie_info(t_stack *a, t_node *start)
+// static	t_serie	*gather_serie_info(t_stack *a, t_node **start)
 // {
 // 	t_serie	*serie;
 // 	int		size;
-
-// 	serie->min = start;
+//
+// 	serie->min = *start;
 // 	serie->max = a->head->next;
 // 	serie->count = 0;
 // 	size = a->size;
 // 	while (size)
 // 	{
-// 		if (serie->max->index > start->index)
+// 		if (serie->max->index > (*start)->index)
 // 		{
-// 			start = serie->max;
+// 			(*start) = serie->max;
 // 			serie->count++;
 // 			if (serie->max->index == a->size - 1)
 // 				break ;
@@ -486,10 +486,10 @@ void    optimal_insertion_sort(t_stack *b, t_stack *a)
 
 // 	start = a->head;
 // 	size = a->size;
-// 	best_serie = gather_serie_info(a, start);
+// 	best_serie = gather_serie_info(a, &start);
 // 	while (--size)
 // 	{
-// 		comparator = gather_serie_info(a, start->next);
+// 		comparator = gather_serie_info(a, &start->next);
 // 		if (comparator->count > best_serie->count)
 // 			best_serie = comparator;
 // 		start = start->next;
@@ -506,31 +506,25 @@ void    optimal_insertion_sort(t_stack *b, t_stack *a)
 
 static void	keep_in_A_push_in_B(t_stack *a, t_stack *b)
 {
+	int	size;
+	// t_node	*iterator;
 	// t_node	*last;
 
-	// last = a->head->prev;
-	int	size;
-
 	size = a->size;
+	// iterator = a->head;
+	// last = a->head->prev;
 	while (size)
 	{
 		if (a->head->index > a->head->prev->index)
 			rotate(a);
+		// if (iterator->index > last->index)
+			// iterator->keep = 1;
 		else
 			push(a, b);
-			// push(a, b);
+		// last = iterator;
+		// iterator = iterator->next;
 		size--;
 	}
-	// t_serie	*best;
-	
-	// best = assign_keep_flags(a);
-	// int	
-	// while (a->size != best->count)
-	// {
-	// 	if (a->head->keep == 1)
-	// 		rotate(a);
-	// 	else
-	// 		push(a, b);
 }
 
 int		check_if_kinda_sorted(t_stack *a, t_stack *b)
@@ -543,8 +537,8 @@ int		check_if_kinda_sorted(t_stack *a, t_stack *b)
 	pos_max = stack_sorted_at_this_pos(a);
 	nb_ra = pos_max + 1;
 	nb_rra = a->size - (pos_max + 1);
-	if (pos_max < 5)
-		return (NOT_OK);
+	if (pos_max < 3)
+		return (-1);
 	else
 	{
 		if (pos_max <= a->size / 2)
@@ -566,10 +560,10 @@ int		check_if_kinda_sorted(t_stack *a, t_stack *b)
 		optimal_insertion_sort(b, a);
 	while (a->head->index != 0)
 		put_min_top(a);
-	if (stack_sorted_at_this_pos(a) == a->size - 1)
-		write(1, "OK\n", 3);
-	else
-		write(1, "KO\n", 3);
+	// if (stack_sorted_at_this_pos(a) == a->size - 1)
+	// 	printf("OK check\n");
+	// else
+	// 	printf("KO\n");
 	return (count = a->count_op + b->count_op);
 }
 
@@ -584,7 +578,7 @@ int		check_if_kinda_rev_sorted(t_stack *a, t_stack *b)
 	nb_ra = pos_max + 1;
 	nb_rra = a->size - (pos_max + 1);
 	if (pos_max < 5)
-		return (NOT_OK);
+		return (-1);
 	else
 	{
 		if (pos_max <= a->size / 2)
@@ -606,69 +600,50 @@ int		check_if_kinda_rev_sorted(t_stack *a, t_stack *b)
 		optimal_insertion_sort(b, a);
 	while (a->head->index != 0)
 		put_min_top(a);
-	if (stack_sorted_at_this_pos(a) == a->size - 1)
-		write(1, "OK\n", 3);
-	else
-		write(1, "KO\n", 3);
+	// if (stack_sorted_at_this_pos(a) == a->size - 1)
+	// 	printf("OK rev check\n");
+	// else
+	// 	printf("KO\n");
 	return (count = a->count_op + b->count_op);
 }
 
-// static int	pre_sort_chunks(t_stack *a, t_stack *b)
-// {
-// 	int	count;
-
-// 	tame_chaos(a, b);
-// 	while (a->size)
-// 		push(a, b);
-// 	return (count = a->count_op + b->count_op);
-// }
-
 void    sort_100_and_less(t_stack *a, t_stack *b)
 {
-	if (check_if_kinda_sorted(a, b) == OK)
+	if (check_if_kinda_sorted(a, b) >= 0)
 		return ;
-	if (check_if_kinda_rev_sorted(a, b) == OK)
+	if (check_if_kinda_rev_sorted(a, b) >= 0)
 		return ;
-	
-	// tame_chaos(a, b);
-	// push_group(a, b, 0, a->size / 2 - 1);
-	// while (a->size)
-	// 	push(a, b);
-	
 	keep_in_A_push_in_B(a, b);
-	// count = pre_sort_efficiently_1(a, b);
-	// count_2 = pre_sort_chunks(a, b);
+	push_group(a, b, 0, 165);
+	push_group(a, b, 166, 332);
+
 	while (b->size)
 		optimal_insertion_sort(b, a);
 	while (a->head->index != 0)
 		put_min_top(a);
-	if (stack_sorted_at_this_pos(a) == a->size - 1)
-		write(1, "OK\n", 3);
-	else
-		write(1, "KO\n", 3);
+	// if (stack_sorted_at_this_pos(a) == a->size - 1)
+	// 	printf("OK\n");
+	// else
+	// 	printf("KO\n");
 }
 
 void    sort_500_and_less(t_stack *a, t_stack *b)
 {
-	if (check_if_kinda_sorted(a, b) == OK)
+	if (check_if_kinda_sorted(a, b) != NOT_OK)
 		return ;
-	if (check_if_kinda_rev_sorted(a, b) == OK)
+	if (check_if_kinda_rev_sorted(a, b) != NOT_OK)
 		return ;
-	
-	// tame_chaos(a, b);
-	// push_group(a, b, 0, a->size / 2 - 1);
-	// while (a->size)
-	// 	push(a, b);
-	
+	push_group(a, b, 0, 250);
+	push_group(a, b, 251, 350);
 	keep_in_A_push_in_B(a, b);
-	// count = pre_sort_efficiently_1(a, b);
-	// count_2 = pre_sort_chunks(a, b);
+	// while (stack_sorted_at_this_pos(a) != a->size - 1)
+		// push(a, b);
 	while (b->size)
 		optimal_insertion_sort(b, a);
 	while (a->head->index != 0)
 		put_min_top(a);
-	if (stack_sorted_at_this_pos(a) == a->size - 1)
-		write(1, "OK\n", 3);
-	else
-		write(1, "KO\n", 3);
+	// if (stack_sorted_at_this_pos(a) == a->size - 1)
+	// 	printf("OK\n");
+	// else
+	// 	printf("KO\n");
 }

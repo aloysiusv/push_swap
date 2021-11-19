@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-t_bool	is_duplicates(long *tab, size_t nb_of_elements)
+int	is_duplicates(long *tab, size_t nb_of_elements)
 {
 	size_t	i;
 	size_t	j;
@@ -32,7 +32,7 @@ t_bool	is_duplicates(long *tab, size_t nb_of_elements)
 	return (OK);
 }
 
-t_bool	stock_and_seek_duplicates(size_t nb_of_elements, char **argv)
+int	stock_and_seek_duplicates(size_t nb_of_elements, char **argv)
 {
 	size_t	i;
 	long	tab[nb_of_elements];
@@ -56,7 +56,7 @@ t_bool	stock_and_seek_duplicates(size_t nb_of_elements, char **argv)
 	return (OK);
 }
 
-t_bool	is_str_int_sized(char *str)
+int	is_str_int_sized(char *str)
 {
 	if (str[0] == '-')
 		str++;
@@ -67,7 +67,7 @@ t_bool	is_str_int_sized(char *str)
 	return (OK);
 }
 
-t_bool	is_str_only_digits(char *str)
+int	is_str_only_digits(char *str)
 {
 	size_t	i;
 
@@ -83,7 +83,7 @@ t_bool	is_str_only_digits(char *str)
 	return (OK);
 }
 
-t_bool	is_input_valid(size_t nb_of_elements, char **input)
+int	is_input_valid(size_t nb_of_elements, char **input)
 {
 	size_t	i;
 	

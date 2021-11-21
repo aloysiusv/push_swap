@@ -79,9 +79,9 @@ void	put_min_top(t_stack *stack)
 		return ;
 	while (stack->head->index != min->index)
 	{
-		if (min_pos <= size / 2) // min_pos + 1;
+		if (min_pos <= size / 2)
 			rotate(stack);
-		if (min_pos > size / 2) // min_pos + 1;
+		if (min_pos > size / 2)
 			reverse_rotate(stack);
 	}
 }
@@ -101,9 +101,32 @@ void	put_max_top(t_stack *stack)
 		return ;
 	while (stack->head->index != max->index)
 	{
-		if (max_pos <= size / 2) // max_pos + 1;
+		if (max_pos <= size / 2)
 			rotate(stack);
-		if (max_pos > size / 2) // max_pos + 1;
+		if (max_pos > size / 2)
 			reverse_rotate(stack);
 	}
+}
+
+int	is_new_min_max(t_stack *a, t_stack *b, int current_index)
+{
+	t_node	*min;
+	t_node	*max;
+	
+	min = find_min(a);
+	max = find_max(a);
+	if (current_index < min->index || current_index > max->index)
+    {
+		while (b->head->index != current_index)
+		{
+			if (find_pos(b, current_index) <= (b->size + 1) / 2)
+            	rotate(b);	
+        	else
+            	reverse_rotate(b);
+		}
+        put_min_top(a);
+        push(b, a);
+		return (1); 
+	}
+	return (0);
 }

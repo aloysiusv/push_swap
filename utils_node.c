@@ -22,7 +22,6 @@ t_node	*create_node(int num)
 	node->value = num;
 	node->index = -1;
 	node->moves = 0;
-	node->keep = 0;
 	node->prev = node;
 	node->next = node;
 	return (node);
@@ -51,4 +50,28 @@ void	delete_node(t_node *node)
 	if (node == NULL)
 		return ;
 	free(node);
+}
+
+void	delete_stacks(t_stack *a, t_stack *b)
+{
+	t_node	*tmp;
+
+	while (a->size)
+	{
+		tmp = a->head;
+	  	a->head = a->head->next;
+	  	delete_node(tmp);
+		a->size--;
+	}
+	if (a != NULL)
+		free(a);
+	while (b->size)
+	{
+		tmp = b->head;
+	  	b->head = b->head->next;
+	  	delete_node(tmp);
+		b->size--;
+	}
+	if (b != NULL)
+		free(b);
 }

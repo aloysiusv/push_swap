@@ -1,11 +1,11 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   swapping_pushing.c                                 :+:      :+:    :+:   */
+/*   swap_and_push.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created:214 21:53:29 by lrandria          #+#    #+#             */
+/*   Created:214 21:53:29 by lrandria                  #+#    #+#             */
 /*   Updated: 2021/10/04 21:53:29 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
@@ -17,6 +17,8 @@ void	swap(t_stack *stack)
 	int	tmp_value;
 	int	tmp_index;
 
+	if (stack->head == NULL)
+		return ;
 	tmp_value = stack->head->value;
 	tmp_index = stack->head->index;
 	if (stack->size >= 2)
@@ -29,16 +31,16 @@ void	swap(t_stack *stack)
 			write(1, "sa\n", 3);
 		if (stack->name == 'b' && stack->ss <= 0)
 			write(1, "sb\n", 3);
-		stack->count_op++;
 	}
 }
 
 void	swap_both(t_stack *a, t_stack *b)
 {
+	if (a->head == NULL || b->head == NULL)
+		return ;
 	swap(a);
 	swap(b);
 	write(1, "ss\n", 3);
-	a->count_op--;
 }
 
 static t_node	*pop(t_stack *stack)
@@ -83,13 +85,11 @@ void	push(t_stack *pushing, t_stack *receiving)
 {
 	t_node	*node;
 
-	if (pushing->head->keep == 1)
-		rotate(pushing);
+	node = pop(pushing);
+	if (node == NULL)
+		return ;
 	else
 	{
-		node = pop(pushing);
-		if (node == NULL)
-			return ;
 		add_top_node(receiving, node);
 		pushing->size--;
 		receiving->size++;
@@ -97,7 +97,5 @@ void	push(t_stack *pushing, t_stack *receiving)
 			write(1, "pa\n", 3);
 		if (receiving->name == 'b')
 			write(1, "pb\n", 3);
-		// printf("Node [%d] has been pushed.\n", receiving->head->value);
-		pushing->count_op++;
 	}
 }

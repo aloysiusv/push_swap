@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils_stack.c                                      :+:      :+:    :+:   */
+/*   initialise_stacks.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -14,7 +14,6 @@
 
 static	void	init_infos(t_stack *a, t_stack *b, size_t size)
 {
-	a->count_op = 0;
 	a->name = 'a';
 	a->size = size;
 	a->swap = 0;
@@ -23,7 +22,6 @@ static	void	init_infos(t_stack *a, t_stack *b, size_t size)
 	a->ss = 0;
 	a->rr = 0;
 	a->rrr = 0;
-	b->count_op = 0;
 	b->name = 'b';
 	b->size = 0;
 	b->swap = 0;
@@ -96,15 +94,17 @@ static int		fill_stack_more(size_t size, t_node **node, char **input)
 	return (0);
 }
 
-int				init_stacks(t_stack *a, t_stack *b, size_t size, char **input)
+int				init_stacks(t_stack *a, t_stack *b, int size, char **input)
 {
 	t_node	*node;
 
 	init_infos(a, b, size);
 	b->head = NULL;
 	a->head = create_node(ft_atoi(input[0]));
+	if (a->size == 1)
+		return (0);
 	node = add_bottom_node(a->head, ft_atoi(input[1]));
-	if (a->head == NULL ||node == NULL)
+	if (a->head == NULL || node == NULL)
 		return (-1);
 	a->head->next = node;
 	if (a->size > 2)
@@ -113,22 +113,7 @@ int				init_stacks(t_stack *a, t_stack *b, size_t size, char **input)
 	a->head->prev = node;
 	node->next = a->head;
 	init_index(a);
+	if (stack_sorted_at_this_pos(a) == size - 1)
+		return (SORTED);
 	return (0);
-}
-
-void			delete_stack(t_stack *stack)
-{
-	t_node	*tmp;
-
-	while (stack->size)
-	{
-		tmp = stack->head;
-	  	stack->head = stack->head->next;
-	  	printf("Node [%d] is next to be deleted.\n", tmp->value);
-	  	delete_node(tmp);
-		stack->size--;
-	}
-	if (stack != NULL)
-		free(stack);
-	printf("Stack has been deleted.\n");
 }

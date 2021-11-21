@@ -12,13 +12,14 @@
 
 NAME		=	push_swap
 CC			=	gcc
-CFLAGS		=	-Wall -Wextra
+CFLAGS		=	-Wall -Werror -Wextra
 OBJS		=	$(SRCS:.c=.o)
 HDR			=	push_swap.h
-SRCS		=	main.c parse_args.c \
-				swapping_pushing.c rotating.c sorting.c \
-				five_or_less.c utils_min_max.c \
-				utils.c utils_node.c utils_stack.c utils_sort.c \
+SRCS		=	main.c parse_args.c initialise_stacks.c \
+				alohomora_5.c alohomora_500.c \
+				swap_and_push.c rotations.c optimal_insertion.c\
+				do_double_op.c groups_and_flags.c return_pos.c  \
+				utils.c utils_node.c utils_min_max.c \
 
 all:		$(NAME)
 

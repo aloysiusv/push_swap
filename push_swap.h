@@ -13,7 +13,6 @@
 #ifndef	PUSH_SWAP_H
 # define PUSH_SWAP_H
 
-# include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
 
@@ -21,12 +20,12 @@
 # define INT_MAX 2147483647
 # define OK		0
 # define NOT_OK -1
+# define SORTED 1
 
 typedef struct s_node
 {
 	int				value;
 	int				index;
-	int				keep;
 	int				moves;
 	struct s_node	*prev;
 	struct s_node	*next;
@@ -35,7 +34,6 @@ typedef struct s_node
 typedef struct s_stack
 {
 	t_node	*head;
-	size_t	count_op;
 	char	name;
 	int		size;
 	int		swap;
@@ -45,13 +43,6 @@ typedef struct s_stack
 	int		rr;
 	int		rrr;
 }				t_stack;
-
-typedef struct s_serie
-{
-	int		count;
-	t_node	*min;
-	t_node	*max;
-}				t_serie;
 
 size_t	ft_strlen(const char *s);
 int 	ft_is_digit(int c);
@@ -69,15 +60,22 @@ void	rotate_both(t_stack *a, t_stack *b);
 void	reverse_rotate(t_stack *stack);
 void	reverse_rotate_both(t_stack *a, t_stack *b);
 
-void	sort_2(t_stack *a);
-void	sort_3(t_stack *a);
 void	sort_5_and_less(t_stack *a, t_stack *b);
-void	sort_100_and_less(t_stack *a, t_stack *b);
 void	sort_500_and_less(t_stack *a, t_stack *b);
 
-int		find_pos(t_stack *stack, int index);
+void	do_all_rot_equal(t_stack *a, t_stack *b);
+void	do_rot_inferior(t_stack *a, t_stack *b);
+void	do_rot_superior(t_stack *a, t_stack *b);
+void	do_rev_rot_inferior(t_stack *a, t_stack *b);
+void	do_rev_rot_superior(t_stack *a, t_stack *b);
+
+void	stock_rotation_flags(t_stack *stack, int index);
+void	push_group(t_stack *a, t_stack *b, int idx_min, int idx_max);
+void    optimal_insertion_sort(t_stack *b, t_stack *a);
+
 t_node	*find_min(t_stack *stack);
 t_node	*find_max(t_stack *stack);
+int		is_new_min_max(t_stack *a, t_stack *b, int current_index);
 void	put_min_top(t_stack *stack);
 void	put_max_top(t_stack *stack);
 
@@ -85,8 +83,9 @@ t_node	*create_node(int num);
 t_node	*add_bottom_node(t_node *current_node, int num);
 void	delete_node(t_node *node);
 
-int		init_stacks(t_stack *a, t_stack *b, size_t size, char **input);
-void	delete_stack(t_stack *stack);
+int		init_stacks(t_stack *a, t_stack *b, int size, char **input);
+void	delete_stacks(t_stack *a, t_stack *b);
+int		find_pos(t_stack *stack, int index);
 int		stack_sorted_at_this_pos(t_stack *stack);
 int		stack_rev_sorted_at_this_pos(t_stack *stack);
 

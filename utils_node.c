@@ -42,7 +42,7 @@ t_node	*add_bottom_node(t_node *current_tail, int num)
 	}
 	else
 		current_tail = bottom;
-	return(bottom);
+	return (bottom);
 }
 
 void	delete_node(t_node *node)
@@ -52,26 +52,31 @@ void	delete_node(t_node *node)
 	free(node);
 }
 
-void	delete_stacks(t_stack *a, t_stack *b)
+int	delete_stacks(t_stack *a, t_stack *b)
 {
 	t_node	*tmp;
 
-	while (a->size)
-	{
-		tmp = a->head;
-	  	a->head = a->head->next;
-	  	delete_node(tmp);
-		a->size--;
-	}
 	if (a != NULL)
-		free(a);
-	while (b->size)
 	{
-		tmp = b->head;
-	  	b->head = b->head->next;
-	  	delete_node(tmp);
-		b->size--;
+		while (a->size)
+		{
+			tmp = a->head;
+			a->head = a->head->next;
+			delete_node(tmp);
+			a->size--;
+		}
+		free(a);
 	}
 	if (b != NULL)
+	{
+		while (b->size)
+		{
+			tmp = b->head;
+			b->head = b->head->next;
+			delete_node(tmp);
+			b->size--;
+		}
 		free(b);
+	}
+	return (0);
 }

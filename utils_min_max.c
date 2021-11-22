@@ -6,7 +6,7 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/10 15:25:52 by lrandria          #+#    #+#             */
-/*   Updated: 2021/11/18 20:40:59 by lrandria         ###   ########.fr       */
+/*   Updated: 2021/11/22 18:47:45 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ t_node	*find_min(t_stack *stack)
 {
 	t_node	*min;
 	t_node	*comparator;
-    int      size;
+	int		size;
 
 	if (stack->head == NULL)
 		return (NULL);
 	size = stack->size;
 	min = stack->head;
-    if (size == 1)
+	if (size == 1)
 		return (min);
 	else
 	{
@@ -42,10 +42,10 @@ t_node	*find_max(t_stack *stack)
 {
 	t_node	*max;
 	t_node	*comparator;
-    int     size;
+	int		size;
 
 	size = stack->size;
-    if (stack->head == NULL)
+	if (stack->head == NULL)
 		return (NULL);
 	max = stack->head;
 	if (size == 1)
@@ -112,21 +112,21 @@ int	is_new_min_max(t_stack *a, t_stack *b, int current_index)
 {
 	t_node	*min;
 	t_node	*max;
-	
+
 	min = find_min(a);
 	max = find_max(a);
 	if (current_index < min->index || current_index > max->index)
-    {
+	{
 		while (b->head->index != current_index)
 		{
 			if (find_pos(b, current_index) <= (b->size + 1) / 2)
-            	rotate(b);	
-        	else
-            	reverse_rotate(b);
+				rotate(b);
+			else
+				reverse_rotate(b);
 		}
-        put_min_top(a);
-        push(b, a);
-		return (1); 
+		put_min_top(a);
+		push(b, a);
+		return (1);
 	}
 	return (0);
 }

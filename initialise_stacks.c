@@ -60,7 +60,7 @@ static t_node	*find_next_min_value(t_stack *a)
 	return (min);
 }
 
-static void		init_index(t_stack *a)
+static void	init_index(t_stack *a)
 {
 	int		index;
 	size_t	size;
@@ -77,7 +77,7 @@ static void		init_index(t_stack *a)
 	}
 }
 
-static int		fill_stack_more(size_t size, t_node **node, char **input)
+static int	fill_stack_more(size_t size, t_node **node, char **input)
 {
 	t_node	*new;
 	size_t	i;
@@ -85,7 +85,7 @@ static int		fill_stack_more(size_t size, t_node **node, char **input)
 	i = 2;
 	while (i < size)
 	{
-		new = add_bottom_node(*node, ft_atoi(input[i])); 
+		new = add_bottom_node(*node, ft_atoi(input[i]));
 		if (new == NULL)
 			return (-1);
 		*node = (*node)->next;
@@ -94,7 +94,7 @@ static int		fill_stack_more(size_t size, t_node **node, char **input)
 	return (0);
 }
 
-int				init_stacks(t_stack *a, t_stack *b, int size, char **input)
+int	init_stacks(t_stack *a, t_stack *b, int size, char **input)
 {
 	t_node	*node;
 

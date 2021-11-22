@@ -35,24 +35,28 @@ int	is_duplicates(long *tab, size_t nb_of_elements)
 int	stock_and_seek_duplicates(size_t nb_of_elements, char **argv)
 {
 	size_t	i;
-	long	tab[nb_of_elements];
+	long	*tab;
 
+	tab = (long *)malloc(sizeof(long) * nb_of_elements);
+	if (tab == NULL)
+		return (NOT_OK);
 	i = 0;
 	while (i < nb_of_elements)
 	{
 		tab[i] = ft_atol(argv[i]);
 		if (tab[i] < INT_MIN || tab[i] > INT_MAX)
 		{
-			// printf("Not an int.\n");
+			free(tab);
 			return (NOT_OK);
 		}
 		i++;
 	}
 	if (is_duplicates(tab, nb_of_elements) == NOT_OK)
 	{
-		// printf("Duplicates.\n");
+		free(tab);
 		return (NOT_OK);
 	}
+	free(tab);
 	return (OK);
 }
 
@@ -86,29 +90,17 @@ int	is_str_only_digits(char *str)
 int	is_input_valid(size_t nb_of_elements, char **input)
 {
 	size_t	i;
-	
-	// if (nb_of_elements < 2)
-	// {
-	// 	// printf("Not enough args.");
-	// 	return (NOT_OK);
-	// }
+
 	i = 0;
 	while (input[i])
 	{
 		if (is_str_only_digits(input[i]) == NOT_OK)
-		{
-			// printf("Non-digits.\n");
 			return (NOT_OK);
-		}
 		if (is_str_int_sized(input[i]) == NOT_OK)
-		{
-			// printf("Bigger than int size\n");
 			return (NOT_OK);
-		}
 		i++;
 	}
 	if (stock_and_seek_duplicates(nb_of_elements, input) == NOT_OK)
-		return(NOT_OK);
-	// printf("It's valid.\n");
+		return (NOT_OK);
 	return (OK);
 }

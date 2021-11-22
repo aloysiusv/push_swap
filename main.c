@@ -25,6 +25,8 @@ int	main(int argc, char **argv)
 	t_stack	*a;
 	t_stack	*b;
 
+	a = NULL;
+	b = NULL;
 	if (argc == 1)
 		return (0);
 	if (is_input_valid(argc - 1, argv + 1) == OK)
@@ -32,15 +34,9 @@ int	main(int argc, char **argv)
 		a = (t_stack *)malloc(sizeof(t_stack));
 		b = (t_stack *)malloc(sizeof(t_stack));
 		if (a == NULL || b == NULL)
-		{
-			delete_stacks(a, b);
-			return (0);
-		}
+			return (delete_stacks(a, b));
 		if (init_stacks(a, b, argc - 1, argv + 1) == SORTED)
-		{
-			delete_stacks(a, b);
-			return (0);
-		}
+			return (delete_stacks(a, b));
 		push_swap(a, b);
 	}
 	else

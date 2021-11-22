@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef	PUSH_SWAP_H
+#ifndef PUSH_SWAP_H
 # define PUSH_SWAP_H
 
 # include <unistd.h>
@@ -21,6 +21,7 @@
 # define OK		0
 # define NOT_OK -1
 # define SORTED 1
+# define BUFFER_SIZE 8
 
 typedef struct s_node
 {
@@ -45,7 +46,8 @@ typedef struct s_stack
 }				t_stack;
 
 size_t	ft_strlen(const char *s);
-int 	ft_is_digit(int c);
+int		ft_strcmp(const char *s1, const char *s2);
+int		ft_is_digit(int c);
 int		ft_atoi(const char *num_ascii);
 long	ft_atol(const char *num_ascii);
 
@@ -71,7 +73,7 @@ void	do_rev_rot_superior(t_stack *a, t_stack *b);
 
 void	stock_rotation_flags(t_stack *stack, int index);
 void	push_group(t_stack *a, t_stack *b, int idx_min, int idx_max);
-void    optimal_insertion_sort(t_stack *b, t_stack *a);
+void	optimal_insertion_sort(t_stack *b, t_stack *a);
 
 t_node	*find_min(t_stack *stack);
 t_node	*find_max(t_stack *stack);
@@ -84,7 +86,7 @@ t_node	*add_bottom_node(t_node *current_node, int num);
 void	delete_node(t_node *node);
 
 int		init_stacks(t_stack *a, t_stack *b, int size, char **input);
-void	delete_stacks(t_stack *a, t_stack *b);
+int		delete_stacks(t_stack *a, t_stack *b);
 int		find_pos(t_stack *stack, int index);
 int		stack_sorted_at_this_pos(t_stack *stack);
 int		stack_rev_sorted_at_this_pos(t_stack *stack);

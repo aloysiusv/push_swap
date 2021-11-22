@@ -6,24 +6,25 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 19:15:34 by lrandria          #+#    #+#             */
-/*   Updated: 2021/10/01 19:15:34 by lrandria         ###   ########.fr       */
+/*   Updated: 2021/11/22 18:42:46 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-static t_node  *find_senpai(t_stack *stack, int current_index)
+static t_node	*find_senpai(t_stack *stack, int current_index)
 {
-    t_node  *iterator;
+	t_node	*iterator;
 	t_node	*senpai;
 	int		size;
 
 	iterator = stack->head;
 	senpai = stack->head;
 	size = stack->size;
-    while (size)
-    {
-		if (iterator->prev->index < current_index && iterator->index > current_index)
+	while (size)
+	{
+		if (iterator->prev->index < current_index
+			&& iterator->index > current_index)
 		{
 			senpai = iterator;
 			break ;
@@ -31,7 +32,7 @@ static t_node  *find_senpai(t_stack *stack, int current_index)
 		iterator = iterator->next;
 		size--;
 	}
-    return (senpai);
+	return (senpai);
 }
 
 static int	calculate_steps_to_top(t_stack *stack, int index)
@@ -50,9 +51,9 @@ static int	calculate_steps_to_top(t_stack *stack, int index)
 static int	calculate_moves(t_stack *a, t_stack *b, int current_index)
 {
 	t_node	*senpai;
-	int	index_moves;
-	int	senpai_moves;
-	int	moves;
+	int		index_moves;
+	int		senpai_moves;
+	int		moves;
 
 	if (a->head == NULL || b->head == NULL)
 		return (0);
@@ -84,12 +85,12 @@ static t_node	*find_cheapest_node(t_stack *a, t_stack *b)
 	return (best_node);
 }
 
-void    optimal_insertion_sort(t_stack *b, t_stack *a)
+void	optimal_insertion_sort(t_stack *b, t_stack *a)
 {
 	t_node	*best_node;
 	t_node	*senpai;
 
-    if (a->head == NULL || b->head == NULL)
+	if (a->head == NULL || b->head == NULL)
 	{
 		if (a->head == NULL)
 			push(b, a);

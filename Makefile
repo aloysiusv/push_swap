@@ -16,7 +16,7 @@ CC			=	gcc
 CFLAGS		=	-Wall -Werror -Wextra
 OBJS		=	$(SRCS:.c=.o)
 BONUS_OBJS	= 	$(BONUS_SRCS:.c=.o)
-HDR			=	push_swap.h get_next_line/get_next_line.h
+HDR			=	push_swap.h get_next_line.h
 SRCS		=	main.c parse_args.c initialise_stacks.c \
 				alohomora_5.c alohomora_500.c \
 				swap_and_push.c rotations.c optimal_insertion.c\
@@ -24,7 +24,7 @@ SRCS		=	main.c parse_args.c initialise_stacks.c \
 				utils.c utils_node.c utils_min_max.c
 BONUS_SRCS	=	checker.c parse_args.c initialise_stacks.c \
 				swap_and_push_checker.c rotations_checker.c return_pos.c \
-				get_next_line/get_next_line.c get_next_line/get_next_line_utils.c \
+				get_next_line.c get_next_line_utils.c \
 				utils.c utils_node.c
 
 all:		$(NAME) $(BONUS)

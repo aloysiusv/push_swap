@@ -6,12 +6,12 @@
 /*   By: lrandria <lrandria@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 19:15:34 by lrandria          #+#    #+#             */
-/*   Updated: 2021/11/22 21:54:34 by lrandria         ###   ########.fr       */
+/*   Updated: 2021/11/23 09:55:27 by lrandria         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
-#include "get_next_line/get_next_line.h"
+#include "get_next_line.h"
 
 int	do_operations(t_stack *a, t_stack *b, char *line)
 {

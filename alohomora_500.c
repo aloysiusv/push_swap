@@ -12,7 +12,7 @@
 
 #include "push_swap.h"
 
-static void	optimal_push(t_stack *a, int pos_max, int nb_ra, int nb_rra)
+static void	optimal_rotate(t_stack *a, int pos_max, int nb_ra, int nb_rra)
 {
 	if (pos_max <= a->size / 2)
 	{
@@ -45,8 +45,8 @@ int	sort_if_kinda_sorted(t_stack *a, t_stack *b)
 		return (NOT_OK);
 	else
 	{
-		optimal_push(a, pos_max, nb_ra, nb_rra);
-		while (a->size != pos_max + 1)
+		optimal_rotate(a, pos_max, nb_ra, nb_rra);
+		while (a->size != nb_ra)
 			push(a, b);
 	}
 	while (b->size)
@@ -69,8 +69,8 @@ int	sort_if_kinda_rev_sorted(t_stack *a, t_stack *b)
 		return (NOT_OK);
 	else
 	{
-		optimal_push(a, pos_max, nb_ra, nb_rra);
-		while (a->size != pos_max + 1)
+		optimal_rotate(a, pos_max, nb_ra, nb_rra);
+		while (a->size != nb_rra)
 			push(a, b);
 	}
 	while (b->size)
